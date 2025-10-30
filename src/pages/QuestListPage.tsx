@@ -34,7 +34,7 @@ const QuestListPage: React.FC = () => {
           </Button>
         </div>
 
-        <QuestTable input={input} setInput={setInput} />
+        <QuestTable />
       </Section>
     </>
   );

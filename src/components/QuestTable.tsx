@@ -1,22 +1,18 @@
 import { Table, Tag, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-import type { DataType, InputType, Paging } from '../interfaces/quest';
-import { useFetchQuest } from '../hooks/useFetchQuest';
-import { useLoaderData } from 'react-router-dom';
-
-interface InputProps {
-  input: InputType;
-  setInput: (value: InputType) => void;
-}
+import type { DataType, Paging } from '../interfaces/quest';
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 
 interface LoaderData {
   data: DataType[];
   pagination: Paging;
 }
 
-const QuestTable: React.FC<InputProps> = ({ input, setInput }) => {
+const QuestTable: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation()
   // const { loading, data, pagination } = useFetchQuest(input);
   const { data, pagination } = useLoaderData() as LoaderData;
 
@@ -68,7 +64,12 @@ const QuestTable: React.FC<InputProps> = ({ input, setInput }) => {
         showSizeChanger: true,
         pageSizeOptions: ['5', '10', '15', '20'],
         showTotal: (total) => `${t('total')} ${total} ${t('items')}`,
-        onChange: (page, pageSize) => setInput({ ...input, page, limit: pageSize }),
+        onChange: (page, pageSize) => {
+          const params = new URLSearchParams(location.search);
+          params.set('page', page.toString());
+          params.set('limit', pageSize.toString());
+          navigate({ pathname: '/quest', search: params.toString() });
+        },
       }}
     />
   );

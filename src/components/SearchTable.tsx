@@ -42,7 +42,7 @@ const StyledSpace = styled(Space)`
   flex-wrap: wrap;
 `;
 
-const SearchTable: React.FC<InputProps> = ({ input, setInput, defaultInput }) => {
+const SearchTable: React.FC<InputProps> = ({ setInput, defaultInput }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -51,30 +51,20 @@ const SearchTable: React.FC<InputProps> = ({ input, setInput, defaultInput }) =>
   const [statusChange, setStatusChange] = useState('all');
 
   const handleSearch = () => {
-    // Build new query params
-    const params = new URLSearchParams(location.search);
-    params.set('page', '1'); // luôn reset page về 1 khi search
-    if (searchText) params.set('keywords', searchText);
-    if (statusChange === 'all') {
-      params.delete('status');
+    if (searchText) {
+      // Build new query params
+      const params = new URLSearchParams(location.search);
+      if (searchText) params.set('keywords', searchText);
+      if (statusChange === 'all') {
+        params.delete('status');
+      } else {
+        params.set('status', statusChange); // 'active' | 'inactive'
+      }
+  
+      // Cập nhật URL
+      navigate({ pathname: '/quest', search: params.toString() });
     } else {
-      params.set('status', statusChange); // 'active' | 'inactive'
-    }
-
-    // Cập nhật URL
-    navigate({ pathname: '/quest', search: params.toString() });
-
-    // Cập nhật state input để useFetchQuest hoặc loader fetch dữ liệu
-    if (statusChange === 'all') {
-      const { status, ...rest } = input;
-      setInput({ ...rest, page: 1, keywords: searchText });
-    } else {
-      setInput({
-        ...input,
-        status: statusChange === 'active',
-        page: 1,
-        keywords: searchText,
-      });
+      navigate('/quest'); // reset URL
     }
   };
 

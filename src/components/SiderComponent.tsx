@@ -1,5 +1,5 @@
 import { GiftOutlined, TrophyOutlined } from '@ant-design/icons';
-import { Flex, Layout, Menu } from 'antd';
+import { Layout, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 const { Sider } = Layout;
 
