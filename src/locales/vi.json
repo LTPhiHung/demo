@@ -1,0 +1,47 @@
+{
+  "search": "Tìm kiếm",
+  "cancel": "Hủy",
+  "status": {
+    "label": "Trạng thái",
+    "description": "Chọn Trạng thái",
+    "all": "Tất cả trạng thái",
+    "active": "Hoạt động",
+    "inactive": "Không hoạt động"
+  },
+  "detail": "Chi tiết",
+  "title": {
+    "label": "Tiêu đề",
+    "placeholder": "Nhập tiêu đề",
+    "message": "Vui lòng nhập tiêu đề!"
+  },
+  "point": {
+    "label": "Điểm",
+    "message1": "Vui lòng điền vào trường này",
+    "message2": "Điểm phải nằm trong khoảng từ 1 đến 100000."
+  },
+  "createdDate": "Ngày tạo",
+  "add": "Thêm",
+  "total": "Tổng",
+  "items": "mục",
+  "SearchQuest": "Tìm kiếm theo ID hoặc tiêu đề nhiệm vụ",
+  "active": "Hoạt động",
+  "expiryDate": {
+    "label": "Ngày hết hạn",
+    "description": "chọn ngày"
+  },
+  "platform": "Nền tảng",
+  "accountRanks": {
+    "label": "Cấp bậc tài khoản",
+    "message": "Vui lòng chọn ít nhất một cấp bậc!"
+  },
+  "requiredUploadImange": "Bắt buộc tải hình ảnh lên",
+  "requiredEnterLink": "Bắt buộc nhập liên kết",
+  "allowMultipleSubmission": "Cho phép nộp nhiều lần",
+  "addNewQuest": "Thêm nhiệm vụ mới",
+  "description": {
+    "label": "Mô tả",
+    "placeholder": "Nhập mô tả tại đây.",
+    "message1": "Vui lòng nhập mô tả!",
+    "message2": "Mô tả không được vượt quá 2000 ký tự."
+  }
+}

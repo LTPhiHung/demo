@@ -1,0 +1,47 @@
+{
+  "search": "Search",
+  "cancel": "Cancel",
+  "status": {
+    "label": "Status",
+    "description": "Select status",
+    "all": "All Statuses",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "detail": "Detail",
+  "title": {
+    "label": "Title",
+    "placeholder": "Enter Title",
+    "message": "Please enter title!"
+  },
+  "point": {
+    "label": "Point",
+    "message1": "Please fill out this field",
+    "message2": "Point must be between 1 and 100000."
+  },
+  "createdDate": "Created Date",
+  "add": "Add",
+  "total": "Total",
+  "items": "items",
+  "SearchQuest": "Search by Quest ID/Quest Title",
+  "active": "Active",
+  "expiryDate": {
+    "label": "Expiry Date",
+    "description": "Select date"
+  },
+  "platform": "Platform",
+  "accountRanks": {
+    "label": "Account Ranks",
+    "message": "Please fill out this field"
+  },
+  "requiredUploadImange": "Required Upload Imange",
+  "requiredEnterLink": "Required Enter Link",
+  "allowMultipleSubmission": "Allow Multiple Submission",
+  "addNewQuest": "Add New Quest",
+  "description": {
+    "label": "Description",
+    "placeholder": "Description Here.",
+    "message1": "Please enter description!",
+    "message2": "Description cannot exceed 2000 characters"
+  }
+}
