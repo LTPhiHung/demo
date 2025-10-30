@@ -7,11 +7,12 @@ export const questLoader = async ({ request }: { request: Request }) => {
   const page = url.searchParams.get('page') || '1';
   const keywords = url.searchParams.get('keywords') || '';
   const statusParam = url.searchParams.get('status'); // 'active' | 'inactive'
+  const limit = url.searchParams.get('limit') || '20';
 
   const input: InputType = {
     page: Number(page),
     keywords,
-    limit: 20,
+    limit: Number(limit),
     ...(statusParam === 'active' ? { status: true } : statusParam === 'inactive' ? { status: false } : {}),
   };
 
