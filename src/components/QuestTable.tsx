@@ -2,7 +2,7 @@ import { Table, Tag, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import type { DataType, Paging } from '../interfaces/quest';
-import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import { useLoaderData, useLocation, useNavigate, useNavigation } from 'react-router-dom';
 
 interface LoaderData {
   data: DataType[];
@@ -12,9 +12,11 @@ interface LoaderData {
 const QuestTable: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const location = useLocation()
-  // const { loading, data, pagination } = useFetchQuest(input);
+  const location = useLocation();
+  const navigation = useNavigation();
+
   const { data, pagination } = useLoaderData() as LoaderData;
+  const loading = navigation.state === 'loading';
 
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id', width: 160 },
@@ -54,7 +56,8 @@ const QuestTable: React.FC = () => {
   return (
     <Table<DataType>
       rowKey="key"
-      // loading={loading}
+      data-testid="quest-table"
+      loading={loading}
       columns={columns}
       dataSource={data}
       pagination={{

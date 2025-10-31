@@ -4,14 +4,7 @@ import { Button, Input, Select, Space } from 'antd';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import type { InputType } from '../interfaces/quest';
 import { useTranslation } from 'react-i18next';
-
-interface InputProps {
-  input: InputType;
-  defaultInput: InputType;
-  setInput: (value: InputType) => void;
-}
 
 const { Option } = Select;
 
@@ -42,36 +35,34 @@ const StyledSpace = styled(Space)`
   flex-wrap: wrap;
 `;
 
-const SearchTable: React.FC<InputProps> = ({ setInput, defaultInput }) => {
+const SearchTable: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
-  const [searchText, setSearchText] = useState('');
-  const [statusChange, setStatusChange] = useState('all');
+  const [searchText, setSearchText] = useState(params.get('keywords') || '');
+  const [statusChange, setStatusChange] = useState(params.get('status') || 'all');
 
   const handleSearch = () => {
-    if (searchText) {
-      // Build new query params
-      const params = new URLSearchParams(location.search);
-      if (searchText) params.set('keywords', searchText);
-      if (statusChange === 'all') {
-        params.delete('status');
-      } else {
-        params.set('status', statusChange); // 'active' | 'inactive'
-      }
-  
-      // Cập nhật URL
-      navigate({ pathname: '/quest', search: params.toString() });
+    if (statusChange === 'all') {
+      params.delete('status');
     } else {
-      navigate('/quest'); // reset URL
+      params.set('status', statusChange);
     }
+    if (searchText) {
+      params.set('keywords', searchText);
+    } else {
+      params.delete('keywords');
+    }
+    params.set('page', '1');
+    params.set('limit', '20');
+    navigate({ pathname: '/quest', search: params.toString() });
   };
 
   const handleChangeStatus = (value: string) => setStatusChange(value);
 
   const handleReset = () => {
-    setInput(defaultInput);
     setSearchText('');
     setStatusChange('all');
     navigate('/quest'); // reset URL
@@ -83,11 +74,11 @@ const SearchTable: React.FC<InputProps> = ({ setInput, defaultInput }) => {
         <Input
           placeholder={t('SearchQuest')}
           style={{ width: 300 }}
+          data-testid="search-input"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
         <Select
-          defaultValue="all"
           allowClear
           value={statusChange}
           placeholder={t('status.description')}

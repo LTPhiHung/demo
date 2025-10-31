@@ -1,4 +1,3 @@
-// src/loaders/questLoader.ts
 import axios from 'axios';
 import type { DataType, InputType, Paging, Quest } from '../interfaces/quest';
 
@@ -13,18 +12,23 @@ export const questLoader = async ({ request }: { request: Request }) => {
     page: Number(page),
     keywords,
     limit: Number(limit),
-    ...(statusParam === 'active' ? { status: true } : statusParam === 'inactive' ? { status: false } : {}),
+    ...(statusParam === 'active'
+      ? { status: true }
+      : statusParam === 'inactive'
+        ? { status: false }
+        : {}),
   };
 
   try {
     const API_URL = 'https://admin-be-stg3.wemastertrade.com/api/v1/wmt/quest/search';
     const res = await axios.post(API_URL, input, {
-        headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWludWF0Ym9AeW9wbWFpbC5jb20iLCJpYXQiOjE3NjE4MTg3MTgsIm5iZiI6MTc2MTgxODcxOCwiZXhwIjoxNzYxODQ3NTE4LCJhdWQiOiJ3ZW1hc3RlcnRyYWRlIiwic3ViIjoiNDNhM2RiMDQtNGY4YS00NGNkLWEyZjYtOTg5YjljMjZkNWU4IiwianRpIjoiWEpwVk9ob3E1Q3JOYm1FWmViR0QtIn0.nP0mlzzj7Hf9-JIbArE36F09XUzRBwyP2xj-HDOAAsM',
-          'application-id': '8eed2241-25c4-413b-8a40-c88ad258c62e',
-          'Content-Type': 'application/json',
-        },
-      });
+      headers: {
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWludWF0Ym9AeW9wbWFpbC5jb20iLCJpYXQiOjE3NjE4NzQ3MzcsIm5iZiI6MTc2MTg3NDczNywiZXhwIjoxNzYxOTAzNTM3LCJhdWQiOiJ3ZW1hc3RlcnRyYWRlIiwic3ViIjoiNDNhM2RiMDQtNGY4YS00NGNkLWEyZjYtOTg5YjljMjZkNWU4IiwianRpIjoiajEzdC1meFp3UDBFNDUwS1Z5MkswIn0.QkSryle7fKf_ev3h0KKETuM6DXsHH1k817RIo0pSYRQ',
+        'application-id': '8eed2241-25c4-413b-8a40-c88ad258c62e',
+        'Content-Type': 'application/json',
+      },
+    });
 
     const data: DataType[] = res.data.data.map((item: Quest) => ({
       key: item.id,

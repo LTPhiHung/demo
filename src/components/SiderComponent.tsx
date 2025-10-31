@@ -1,56 +1,61 @@
 import { GiftOutlined, TrophyOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import styled from '@emotion/styled';
+
 const { Sider } = Layout;
 
 interface SiderComponentProps {
   collapsed: boolean;
 }
 
+const StyledSider = styled(Sider)`
+  background: #fff;
+  color: #000;
+  margin-right: 1px;
+`;
+
+const LogoWrapper = styled.div`
+  height: 56px;
+  padding: 0 20px;
+  font-weight: bold;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+`;
+
+const LogoImg = styled.img`
+  object-fit: contain;
+  height: 40px;
+  max-width: 206px;
+  width: 100%;
+`;
+
 const SiderComponent: React.FC<SiderComponentProps> = ({ collapsed }) => {
   const navigate = useNavigate();
+
   return (
-    <Sider
-      trigger={null}
-      collapsible
-      collapsed={collapsed}
-      width={264}
-      style={{ background: '#fff', color: '#000', marginRight: 1 }}
-    >
-      <div
-        style={{
-          height: 56,
-          padding: '0 20px',
-          color: 'white',
-          fontWeight: 'bold',
-          fontSize: 18,
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
+    <StyledSider trigger={null} collapsible collapsed={collapsed} width={264}>
+      <LogoWrapper>
         {!collapsed ? (
-          <img
+          <LogoImg
             alt="Gamification"
             src="https://wemastertrade.azureedge.net/admin-blobstorage/asset/logo/logo-wmt-dark_h40.png"
-            style={{ objectFit: 'contain', height: '40px', maxWidth: '206px', width: '100%' }}
           />
         ) : (
-          <img
+          <LogoImg
             alt="Gamification"
             src="https://wemastertrade.azureedge.net/admin-blobstorage/asset/logo/short-logo-wmt_40x40.png"
-            style={{ objectFit: 'contain', height: '40px', maxWidth: '206px', width: '100%' }}
           />
         )}
-      </div>
+      </LogoWrapper>
 
       <Menu
         mode="inline"
         defaultSelectedKeys={['quest-1']}
         defaultOpenKeys={['quest']}
         onClick={(e) => {
-          if (e.key === 'quest-1') {
-            navigate('/quest');
-          }
+          if (e.key === 'quest-1') navigate('/quest');
         }}
         items={[
           {
@@ -79,7 +84,7 @@ const SiderComponent: React.FC<SiderComponentProps> = ({ collapsed }) => {
           },
         ]}
       />
-    </Sider>
+    </StyledSider>
   );
 };
 

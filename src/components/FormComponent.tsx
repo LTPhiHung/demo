@@ -41,7 +41,7 @@ export const FormComponent: React.FC<Props> = ({ setIsFormComplete }) => {
       formData.expiryDate !== null;
     setIsFormComplete(checkComplete);
   }, [formData]);
-  
+
   return (
     <div style={{ maxWidth: 1132, width: '100%' }}>
       <Form

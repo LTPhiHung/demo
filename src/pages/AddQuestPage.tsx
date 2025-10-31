@@ -1,11 +1,44 @@
+/** @jsxImportSource @emotion/react */
 import { ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Typography } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { FormComponent } from '../components/FormComponent';
+import styled from '@emotion/styled';
 
 const { Title } = Typography;
+
+// 🔹 Styled Components (Emotion)
+const Wrapper = styled.div`
+  margin-bottom: 16px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+`;
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+`;
+
+const BackButton = styled(Button)`
+  padding: 0 15px;
+  border-radius: 6px;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+`;
+
+const AddButton = styled(Button)`
+  margin-left: auto;
+  padding: 0 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const AddNewQuestForm: React.FC = () => {
   const { t } = useTranslation();
@@ -13,37 +46,32 @@ const AddNewQuestForm: React.FC = () => {
   const [isFormComplete, setIsFormComplete] = useState(false);
 
   return (
-    <div style={{ marginBottom: 16, padding: 24, background: '#fff', borderRadius: 8 }}>
+    <Wrapper>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24, gap: 16 }}>
-        <Button
+      <Header>
+        <BackButton
           data-testid="back-button"
-          style={{ padding: '0 15px', borderRadius: 6, height: 32, width: 32, textAlign: 'center' }}
           onClick={() => navigate('/quest')}
         >
           <ArrowLeftOutlined style={{ fontSize: 14, cursor: 'pointer' }} />
-        </Button>
+        </BackButton>
+
         <Title level={4} style={{ margin: 0, fontWeight: 'bold' }}>
           {t('addNewQuest')}
         </Title>
-        <Button
+
+        <AddButton
           type="primary"
           disabled={!isFormComplete}
-          style={{
-            marginLeft: 'auto',
-            padding: '0 32px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
         >
           <PlusOutlined />
           <span>{t('add')}</span>
-        </Button>
-      </div>
+        </AddButton>
+      </Header>
 
+      {/* Form */}
       <FormComponent setIsFormComplete={setIsFormComplete} />
-    </div>
+    </Wrapper>
   );
 };
 
