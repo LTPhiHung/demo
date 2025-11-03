@@ -1,3 +1,4 @@
+import type dayjs from "dayjs";
 export interface InputType {
   limit: number;
   page: number;
@@ -6,20 +7,22 @@ export interface InputType {
 }
 
 export interface Quest {
-  id: number;
-  title: string;
-  point: number;
-  status: boolean;
-  createdAt: string;
-}
-
-export interface DataType {
-  key: number;
+  challengeCode: string;
   id: string;
   title: string;
   point: number;
   status: boolean;
-  createdAt: string;
+  allowSubmitMultiple: boolean;
+  accountRanks: string[];
+  description: string;
+  requiredUploadEvidence: boolean;
+  requiredEnterLink: boolean;
+  expiryDate: dayjs.Dayjs | null;
+  platform: number;
+  createdAt: string;               
+  updatedAt: string;               
+  createdBy: string;
+  updatedBy: string | null;
 }
 
 export interface Paging {

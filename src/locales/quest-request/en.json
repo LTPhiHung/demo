@@ -1,0 +1,28 @@
+{
+  "status": {
+    "id": "ID",
+    "label": "Status",
+    "description": "Select status",
+    "all": "All Statuses",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected"
+  },
+  "detail": "Detail",
+  "questType": {
+    "label": "Quest type",
+    "description": "Select Quest type",
+    "all": "All Quest type",
+    "common": "Common Quest type",
+    "welcome": "Welcome Quest type"
+  },
+  "title": {
+    "label": "Title"
+  },
+  "point": {
+    "label": "Point"
+  },
+  "submittedDate": "Submitted Date",
+  "fullname": "Full Name",
+  "email": "Email"
+}

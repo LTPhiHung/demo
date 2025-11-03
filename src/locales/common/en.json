@@ -1,0 +1,34 @@
+{
+  "search": "Search",
+  "cancel": "Cancel",
+  "status": {
+    "label": "Status",
+    "description": "Select status",
+    "all": "All Statuses",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "add": "Add",
+  "total": "Total",
+  "items": "items",
+  "SearchQuest": "Search by Quest ID/Quest Title",
+  "questType": {
+    "label": "Quest type",
+    "description": "Select Quest type",
+    "all": "All Quest type",
+    "common": "Common Quest type",
+    "welcome": "Welcome Quest type"
+  },
+  "status2": {
+    "label": "Status",
+    "description": "Select status",
+    "all": "All Statuses",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected"
+  },
+  "date": {
+    "start": "Start date",
+    "end": "End date"
+  }
+}

@@ -1,6 +1,4 @@
 {
-  "search": "Search",
-  "cancel": "Cancel",
   "status": {
     "label": "Status",
     "description": "Select status",
@@ -21,9 +19,6 @@
   },
   "createdDate": "Created Date",
   "add": "Add",
-  "total": "Total",
-  "items": "items",
-  "SearchQuest": "Search by Quest ID/Quest Title",
   "active": "Active",
   "expiryDate": {
     "label": "Expiry Date",
@@ -34,8 +29,11 @@
     "label": "Account Ranks",
     "message": "Please fill out this field"
   },
-  "requiredUploadImange": "Required Upload Imange",
-  "requiredEnterLink": "Required Enter Link",
+  "requiredSwitch": {
+    "enterLink": "Required Enter Link",
+    "uploadImage": "Required Upload Image",
+    "message": "At least required image or required link checked"
+  },
   "allowMultipleSubmission": "Allow Multiple Submission",
   "addNewQuest": "Add New Quest",
   "description": {

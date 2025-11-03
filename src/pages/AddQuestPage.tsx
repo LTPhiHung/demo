@@ -1,64 +1,55 @@
 /** @jsxImportSource @emotion/react */
 import { ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Typography } from 'antd';
+import { Typography } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FormComponent } from '../components/FormComponent';
-import styled from '@emotion/styled';
+import { AddButton, BackButton, Header, Section, Wrapper } from './AddQuestPage.styles';
+import type { Quest } from '../interfaces/quest';
 
 const { Title } = Typography;
 
-// 🔹 Styled Components (Emotion)
-const Wrapper = styled.div`
-  margin-bottom: 16px;
-  padding: 24px;
-  background: #fff;
-  border-radius: 8px;
-`;
-
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 24px;
-  gap: 16px;
-`;
-
-const BackButton = styled(Button)`
-  padding: 0 15px;
-  border-radius: 6px;
-  height: 32px;
-  width: 32px;
-  text-align: center;
-`;
-
-const AddButton = styled(Button)`
-  margin-left: auto;
-  padding: 0 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const AddNewQuestForm: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('quest');
   const navigate = useNavigate();
   const [isFormComplete, setIsFormComplete] = useState(false);
-
+  const defaultValue: Quest = {
+    title: '',
+    point: 1,
+    accountRanks: [],
+    description: '',
+    requiredUploadEvidence: true,
+    requiredEnterLink: true,
+    allowSubmitMultiple: true,
+    expiryDate: null, // kiểu Quest nên khai báo là dayjs.Dayjs | null
+    platform: 0,
+    challengeCode: '',
+    id: '',
+    status: false,
+    createdAt: '',
+    updatedAt: '',
+    createdBy: '',
+    updatedBy: ''
+  };
+  const location = useLocation();
+  const questData = location.state?.quest ?? defaultValue;
   return (
     <Wrapper>
       {/* Header */}
       <Header>
-        <BackButton
-          data-testid="back-button"
-          onClick={() => navigate('/quest')}
-        >
-          <ArrowLeftOutlined style={{ fontSize: 14, cursor: 'pointer' }} />
-        </BackButton>
+        <Section>
+          <BackButton
+            data-testid="back-button"
+            onClick={() => navigate('/quest')}
+          >
+            <ArrowLeftOutlined style={{ fontSize: 14, cursor: 'pointer' }} />
+          </BackButton>
 
-        <Title level={4} style={{ margin: 0, fontWeight: 'bold' }}>
-          {t('addNewQuest')}
-        </Title>
+          <Title level={4} style={{ margin: 0, fontWeight: 'bold' }}>
+            {questData.challengeCode !== '' ? questData.challengeCode: t('addNewQuest')}
+          </Title>
+        </Section>
 
         <AddButton
           type="primary"
@@ -70,7 +61,7 @@ const AddNewQuestForm: React.FC = () => {
       </Header>
 
       {/* Form */}
-      <FormComponent setIsFormComplete={setIsFormComplete} />
+      <FormComponent setIsFormComplete={setIsFormComplete} questData={questData} />
     </Wrapper>
   );
 };

@@ -10,7 +10,7 @@ const MainLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <Layout style={{ height: '100vh' }}>
+    <Layout>
       {/* Sidebar */}
       <SiderComponent collapsed={collapsed} />
 
@@ -21,7 +21,8 @@ const MainLayout: React.FC = () => {
         {/* Content */}
         <Content
           style={{
-            margin: '24px 16px',
+            margin: 20,
+            overflow: 'initial',
           }}
         >
           <Outlet />

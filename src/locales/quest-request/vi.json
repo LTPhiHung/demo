@@ -1,0 +1,27 @@
+{
+  "status": {
+    "label": "Trạng thái",
+    "description": "Chọn Trạng thái",
+    "all": "Tất cả trạng thái",
+    "pending": "Đang chờ duyệt",
+    "approved": "Đã duyệt",
+    "rejected": "Từ chối"
+  },
+  "detail": "Chi tiết",
+  "questType": {
+    "label": "Nhiệm vụ",
+    "description": "Chọn loại nhiệm vụ",
+    "all": "Tất cả loại nhiệm vụ",
+    "common": "Nhiệm vụ thông thường",
+    "welcome": "Nhiệm vụ chào mừng"
+  },
+  "title": {
+    "label": "Tiêu đề"
+  },
+  "point": {
+    "label": "Điểm thưởng"
+  },
+  "submittedDate": "Ngày gửi",
+  "fullname": "Họ và tên",
+  "email": "Email"
+}

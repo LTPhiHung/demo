@@ -1,0 +1,15 @@
+{
+  "search": "Tìm kiếm",
+  "cancel": "Hủy",
+  "status": {
+    "label": "Trạng thái",
+    "description": "Chọn Trạng thái",
+    "all": "Tất cả trạng thái",
+    "active": "Hoạt động",
+    "inactive": "Không hoạt động"
+  },
+  "add": "Thêm",
+  "total": "Tổng",
+  "items": "mục",
+  "SearchQuest": "Tìm kiếm theo ID hoặc tiêu đề nhiệm vụ"
+}

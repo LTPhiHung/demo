@@ -2,10 +2,12 @@ import { Checkbox, DatePicker, Form, Input, Select, Switch } from 'antd';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { Quest } from '../interfaces/quest';
 
 const { TextArea } = Input;
 
 interface Props {
+  questData: Quest;
   setIsFormComplete: (value: boolean) => void;
 }
 
@@ -15,30 +17,19 @@ const accountRanksOptions = [
   { label: 'accountRank.diamond', value: 'diamond' },
 ];
 
-export const FormComponent: React.FC<Props> = ({ setIsFormComplete }) => {
+export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete }) => {
   const [form] = Form.useForm();
-  const { t } = useTranslation();
-  const [formData, setFormData] = useState({
-    active: true,
-    title: '',
-    point: 1,
-    accountRanks: [] as string[],
-    description: '',
-    requiredUploadImage: true,
-    requiredEnterLink: true,
-    allowMultipleSubmission: true,
-    expiryDate: null as null | dayjs.Dayjs,
-    platform: 'other',
-  });
-
+  const { t } = useTranslation('quest');
+  const [formData, setFormData] = useState(questData);
+  console.log(questData)
   useEffect(() => {
     const checkComplete =
       formData.title?.trim() !== '' &&
       formData.point > 0 &&
-      formData.accountRanks.length > 0 &&
+      (formData.accountRanks?.length ?? 0) > 0 &&
       formData.description?.trim() !== '' &&
-      formData.platform?.trim() !== '' &&
-      formData.expiryDate !== null;
+      formData.expiryDate !== null &&
+        (formData.requiredUploadEvidence === true || formData.requiredEnterLink === true);;
     setIsFormComplete(checkComplete);
   }, [formData]);
 
@@ -58,9 +49,9 @@ export const FormComponent: React.FC<Props> = ({ setIsFormComplete }) => {
         {/* Active */}
         <Form.Item
           label={t('status.active') + ' :'}
-          name="active"
+          name="status"
           valuePropName="checked"
-          labelCol={{ style: { width: 263, textAlign: 'left' } }}
+          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Switch />
@@ -71,7 +62,7 @@ export const FormComponent: React.FC<Props> = ({ setIsFormComplete }) => {
           label={t('title.label') + ' :'}
           name="title"
           rules={[{ required: true, message: t('title.message') }]}
-          labelCol={{ style: { width: 263, textAlign: 'left' } }}
+          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Input placeholder={t('title.placeholder')} maxLength={200} />
@@ -81,7 +72,7 @@ export const FormComponent: React.FC<Props> = ({ setIsFormComplete }) => {
         <Form.Item
           label={t('expiryDate.label') + ' :'}
           name="expiryDate"
-          labelCol={{ style: { width: 263, textAlign: 'left' } }}
+          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <DatePicker
@@ -96,17 +87,17 @@ export const FormComponent: React.FC<Props> = ({ setIsFormComplete }) => {
         <Form.Item
           label={t('platform') + ' :'}
           name="platform"
-          labelCol={{ style: { width: 263, textAlign: 'left' } }}
+          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Select allowClear placeholder={t('status.desciption')}>
-            <Select.Option value="other">Other</Select.Option>
-            <Select.Option value="facebook">Facebook</Select.Option>
-            <Select.Option value="youtube">YouTube</Select.Option>
-            <Select.Option value="Telegram">Telegram</Select.Option>
-            <Select.Option value="Tiktok">Tiktok</Select.Option>
-            <Select.Option value="Twitter">Twitter</Select.Option>
-            <Select.Option value="Discord">Discord</Select.Option>
+            <Select.Option value={0}>Other</Select.Option>
+            <Select.Option value={1}>Facebook</Select.Option>
+            <Select.Option value={2}>YouTube</Select.Option>
+            <Select.Option value={3}>Telegram</Select.Option>
+            <Select.Option value={4}>Tiktok</Select.Option>
+            <Select.Option value={5}>Twitter</Select.Option>
+            <Select.Option value={6}>Discord</Select.Option>
           </Select>
         </Form.Item>
 
@@ -124,7 +115,7 @@ export const FormComponent: React.FC<Props> = ({ setIsFormComplete }) => {
               message: t('point.message2'),
             },
           ]}
-          labelCol={{ style: { width: 263, textAlign: 'left' } }}
+          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Input type="number" placeholder="Enter points" />
@@ -135,7 +126,7 @@ export const FormComponent: React.FC<Props> = ({ setIsFormComplete }) => {
           label={t('accountRanks.label') + ' :'}
           name="accountRanks"
           rules={[{ required: true, message: t('accountRanks.message'), type: 'array' }]}
-          labelCol={{ style: { width: 263, textAlign: 'left' } }}
+          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Checkbox.Group options={accountRanksOptions} />
@@ -143,22 +134,46 @@ export const FormComponent: React.FC<Props> = ({ setIsFormComplete }) => {
 
         {/* Required Upload Image */}
         <Form.Item
-          label={t('requiredUploadImange') + ' :'}
-          name="requiredUploadImage"
+          label={t('requiredSwitch.uploadImage') + ' :'}
+          name="requiredUploadEvidence"
           valuePropName="checked"
-          labelCol={{ style: { width: 263, textAlign: 'left' } }}
+          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
+          dependencies={['requiredEnterLink']}
+          rules={[
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                const other = getFieldValue('requiredEnterLink');
+                if (value || other) return Promise.resolve();
+                return Promise.reject(
+                  new Error(t('requiredSwitch.message'))
+                );
+              },
+            }),
+          ]}
         >
           <Switch />
         </Form.Item>
 
         {/* Required Enter Link */}
         <Form.Item
-          label={t('requiredEnterLink') + ' :'}
+          label={t('requiredSwitch.enterLink') + ' :'}
           name="requiredEnterLink"
           valuePropName="checked"
-          labelCol={{ style: { width: 263, textAlign: 'left' } }}
+          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
+          dependencies={['requiredEnterUpload']}
+          rules={[
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                const other = getFieldValue('requiredEnterUpload');
+                if (value || other) return Promise.resolve();
+                return Promise.reject(
+                  new Error(t('requiredSwitch.message'))
+                );
+              },
+            }),
+          ]}
         >
           <Switch />
         </Form.Item>
@@ -166,9 +181,9 @@ export const FormComponent: React.FC<Props> = ({ setIsFormComplete }) => {
         {/* Allow Multiple Submission */}
         <Form.Item
           label={t('allowMultipleSubmission') + ' :'}
-          name="allowMultipleSubmission"
+          name="allowSubmitMultiple"
           valuePropName="checked"
-          labelCol={{ style: { width: 263, textAlign: 'left' } }}
+          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Switch />
@@ -182,7 +197,7 @@ export const FormComponent: React.FC<Props> = ({ setIsFormComplete }) => {
             { required: true, message: t('description.message1') },
             { max: 2000, message: t('description.message2') },
           ]}
-          labelCol={{ style: { width: 263, textAlign: 'left' } }}
+          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <TextArea placeholder={t('description.placeholder')} rows={3} />

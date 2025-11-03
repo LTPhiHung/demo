@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import type { MenuProps } from 'antd';
 
 const LanguageSelector: React.FC = () => {
-  const { i18n } = useTranslation();
+  const { i18n } = useTranslation(['common', 'request']);
+
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);

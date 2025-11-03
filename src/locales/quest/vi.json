@@ -1,6 +1,4 @@
 {
-  "search": "Tìm kiếm",
-  "cancel": "Hủy",
   "status": {
     "label": "Trạng thái",
     "description": "Chọn Trạng thái",
@@ -21,9 +19,6 @@
   },
   "createdDate": "Ngày tạo",
   "add": "Thêm",
-  "total": "Tổng",
-  "items": "mục",
-  "SearchQuest": "Tìm kiếm theo ID hoặc tiêu đề nhiệm vụ",
   "active": "Hoạt động",
   "expiryDate": {
     "label": "Ngày hết hạn",
@@ -34,8 +29,11 @@
     "label": "Cấp bậc tài khoản",
     "message": "Vui lòng chọn ít nhất một cấp bậc!"
   },
-  "requiredUploadImange": "Bắt buộc tải hình ảnh lên",
-  "requiredEnterLink": "Bắt buộc nhập liên kết",
+  "requiredSwitch": {
+    "enterLink": "Bắt buộc nhập liên kết",
+    "uploadImage": "Bắt buộc tải hình ảnh lên",
+    "message": "Cần chọn ít nhất một trong hai: hình ảnh hoặc liên kết."
+  },
   "allowMultipleSubmission": "Cho phép nộp nhiều lần",
   "addNewQuest": "Thêm nhiệm vụ mới",
   "description": {

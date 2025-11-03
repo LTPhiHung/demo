@@ -1,35 +1,11 @@
 import { GiftOutlined, TrophyOutlined } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
-
-const { Sider } = Layout;
+import { LogoImg, LogoWrapper, StyledSider } from './SiderComponent.styles';
 
 interface SiderComponentProps {
   collapsed: boolean;
 }
-
-const StyledSider = styled(Sider)`
-  background: #fff;
-  color: #000;
-  margin-right: 1px;
-`;
-
-const LogoWrapper = styled.div`
-  height: 56px;
-  padding: 0 20px;
-  font-weight: bold;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-`;
-
-const LogoImg = styled.img`
-  object-fit: contain;
-  height: 40px;
-  max-width: 206px;
-  width: 100%;
-`;
 
 const SiderComponent: React.FC<SiderComponentProps> = ({ collapsed }) => {
   const navigate = useNavigate();
@@ -52,10 +28,10 @@ const SiderComponent: React.FC<SiderComponentProps> = ({ collapsed }) => {
 
       <Menu
         mode="inline"
-        defaultSelectedKeys={['quest-1']}
+        defaultSelectedKeys={['quest']}
         defaultOpenKeys={['quest']}
         onClick={(e) => {
-          if (e.key === 'quest-1') navigate('/quest');
+          navigate(e.key);
         }}
         items={[
           {
@@ -63,11 +39,11 @@ const SiderComponent: React.FC<SiderComponentProps> = ({ collapsed }) => {
             icon: <TrophyOutlined />,
             label: 'Quest',
             children: [
-              { key: 'quest-1', label: 'Quest' },
-              { key: 'quest-2', label: 'Welcome Quest' },
-              { key: 'quest-3', label: 'Quest Request' },
-              { key: 'quest-4', label: 'Redeem' },
-              { key: 'quest-5', label: 'Configuration' },
+              { key: 'quest', label: 'Quest' },
+              { key: 'welcome-quest', label: 'Welcome Quest' },
+              { key: 'point-request', label: 'Quest Request' },
+              { key: 'redeem', label: 'Redeem' },
+              { key: 'configuration', label: 'Configuration' },
             ],
           },
           {
