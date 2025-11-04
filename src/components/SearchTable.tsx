@@ -2,33 +2,29 @@
 import { ReloadOutlined, SearchOutlined } from '@ant-design/icons';
 import { Input, Select, DatePicker } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { ButtonSpace, ResetButton, SearchButton, Section, StyledSpace } from './SearchTable.style';
-import type { DatePickerProps, GetProps } from 'antd';
+import { ButtonSpace, ResetButton, SearchButton, StyledSpace } from './SearchTable.style';
+import type { SearchInput } from '../interfaces/searchInput';
+import type { RangePickerProps } from 'antd/es/date-picker';
+import ContentContainer from './ContentContainer';
 
-type RangePickerProps = GetProps<typeof DatePicker.RangePicker>;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
-interface SearchInput {
-  keywords: string;
-  status: string;
-  type?: string;
-}
 
 interface PageProps {
+  status1?: boolean;
+  status2?: boolean;
   typeSearch?: boolean;
   dateSearch?: boolean;
   handleSearch?: () => void;
   handleReset?: () => void;
-  setSearchInput?: (value: (prev: SearchInput) => SearchInput) => void;
-  searchInput?: SearchInput;
+  setSearchInput: (value: SearchInput) => void;
+  searchInput: SearchInput;
 }
 
-const onOk = (value: DatePickerProps['value'] | RangePickerProps['value']) => {
-  console.log('onOk: ', value);
-};
-
 const SearchTable: React.FC<PageProps> = ({
+  status1,
+  status2,
   typeSearch,
   dateSearch,
   handleSearch,
@@ -36,17 +32,32 @@ const SearchTable: React.FC<PageProps> = ({
   setSearchInput,
   searchInput,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
 
-  const handleChangeStatus = (value: string) => 
-    setSearchInput?.((prev) => ({ ...prev, status: value }));
-  
+  const handleChangeStatus = (value: number) =>
+    setSearchInput({ ...searchInput, status: value });
 
-  const handleChangeKeywords = (value: string) =>
-    setSearchInput?.((prev) => ({ ...prev, keywords: value }));
+  const handleChangeKeywords = (value: string) => {
+    if(value.trim()) {
+      setSearchInput({ ...searchInput, keywords: value });
+    }
+  }
+  const handleChangeType = (value: number) =>
+    setSearchInput({ ...searchInput, questType: value });
+
+  const handleChangeDate: RangePickerProps['onChange'] = (dates) => {
+    if (!dates) return;
+    const [start, end] = dates;
+    setSearchInput({ ...searchInput, submittedDate: {
+      from:  start?.toISOString() || "",
+      to: end?.toISOString() || ""
+    } });
+  };
+
+  console.log(searchInput)
 
   return (
-    <Section>
+    <ContentContainer style={{ marginBottom: 24 }}>
       <StyledSpace>
         <Input
           placeholder={t('SearchQuest')}
@@ -55,45 +66,56 @@ const SearchTable: React.FC<PageProps> = ({
           value={searchInput?.keywords || ''}
           onChange={(e) => handleChangeKeywords(e.target.value)}
         />
-        <Select
-          allowClear
-          value={searchInput?.status}
-          placeholder={t('status.description')}
-          style={{ width: 180 }}
-          onChange={handleChangeStatus}
-          data-testid="filter-status"
-        >
-          <Option value="all">{t('status.all')}</Option>
-          <Option value="active">{t('status.active')}</Option>
-          <Option value="inactive">{t('status.inactive')}</Option>
-        </Select>
+        {status1 && (
+          <Select
+            allowClear
+            value={searchInput?.status}
+            placeholder={t('status.description')}
+            style={{ width: 180 }}
+            onChange={handleChangeStatus}
+            data-testid="filter-status"
+          >
+            <Option value={2}>{t('status.all')}</Option>
+            <Option value={1}>{t('status.active')}</Option>
+            <Option value={0}>{t('status.inactive')}</Option>
+          </Select>
+          )}
+
+        {status2 && (
+          <Select
+            allowClear
+            value={searchInput?.status || 0}
+            placeholder={t('status2.description')}
+            style={{ width: 180 }}
+            onChange={handleChangeStatus}
+            data-testid="filter-status2"
+          >
+            <Option value={0}>{t('status2.all')}</Option>
+            <Option value={1}>{t('status2.pending')}</Option>
+            <Option value={2}>{t('status2.approved')}</Option>
+            <Option value={3}>{t('status2.rejected')}</Option>
+          </Select>
+        )}
 
         {typeSearch && (
           <Select
             allowClear
-            value={searchInput?.type}
-            placeholder={t('type.description')}
+            value={searchInput?.questType || 0}
+            placeholder={t('questType.description')}
             style={{ width: 180 }}
-            onChange={(value) =>
-              setSearchInput?.((prev) => ({ ...prev, type: value }))
-            }
-            data-testid="filter-type"
+            onChange={handleChangeType}
+            data-testid="filter-questType"
           >
-            <Option value="all">{t('type.all')}</Option>
-            <Option value="active">{t('type.active')}</Option>
-            <Option value="inactive">{t('type.inactive')}</Option>
+            <Option value={0}>{t('questType.all')}</Option>
+            <Option value={1}>{t('questType.common')}</Option>
+            <Option value={2}>{t('questType.welcome')}</Option>
           </Select>
         )}
 
         {dateSearch && (
           <RangePicker
-            showTime={{ format: 'HH:mm' }}
-            format="YYYY-MM-DD HH:mm"
-            onChange={(value, dateString) => {
-              console.log('Selected Time: ', value);
-              console.log('Formatted Selected Time: ', dateString);
-            }}
-            onOk={onOk}
+            format="YYYY-MM-DD"
+            onChange={handleChangeDate}
           />
         )}
 
@@ -108,7 +130,7 @@ const SearchTable: React.FC<PageProps> = ({
           </ResetButton>
         </ButtonSpace>
       </StyledSpace>
-    </Section>
+    </ContentContainer>
   );
 };
 

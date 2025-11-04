@@ -1,6 +1,6 @@
 {
+  "id": "ID",
   "status": {
-    "id": "ID",
     "label": "Status",
     "description": "Select status",
     "all": "All Statuses",
@@ -10,11 +10,13 @@
   },
   "detail": "Detail",
   "questType": {
-    "label": "Quest type",
-    "description": "Select Quest type",
-    "all": "All Quest type",
-    "common": "Common Quest type",
-    "welcome": "Welcome Quest type"
+    "label": "Quest Type",
+    "description": "Select Quest Type",
+    "all": "All Quest Type",
+    "common": "Common Quest Type",
+    "welcome": "Welcome Quest Type",
+    "challengeType1": "Common Quest",
+    "challengeType2": "Welcome Quest"
   },
   "title": {
     "label": "Title"
@@ -23,6 +25,26 @@
     "label": "Point"
   },
   "submittedDate": "Submitted Date",
-  "fullname": "Full Name",
-  "email": "Email"
+  "fullName": "Full Name",
+  "email": "Email",
+  "requestDetail": {
+    "requestId": "Request ID",
+    "questId": "Quest ID",
+    "questTitle": "Quest Title",
+    "questType": "Quest Type",
+    "platform": "Platform",
+    "point": "Point",
+    "description": "Description",
+    "fullName": "Full Name",
+    "email": "Email",
+    "status": "Status",
+    "submittedDate": "Submitted Date",
+    "updatedDate": "Updated Date",
+    "updatedBy": "Updated By",
+    "evidences": "Evidences",
+    "relatedLink": "Related Link",
+    "status1": "Pending",
+    "status2": "Approved",
+    "status3": "Rejected"
+  }
 }

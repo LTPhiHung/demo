@@ -1,25 +1,30 @@
 import { Table } from 'antd';
 import { useTranslation } from 'react-i18next';
-import type { Quest, Paging } from '../interfaces/quest';
-import { useLocation, useNavigate } from 'react-router-dom';
 import type { ColumnsType } from 'antd/es/table';
+import type { Paging } from '../interfaces/paging';
 
-interface TableProps {
-  columns: ColumnsType<Quest>;
-  data: Quest[];
+interface TableProps<T> {
+  columns: ColumnsType<T>;
+  data: T[];
   pagination: Paging;
   loading: boolean;
+  handlePagination: (page: number, pageSize: number) => void;
 }
 
-const QuestTable: React.FC<TableProps> = ({ columns, data, pagination, loading }) => {
+function QuestTable<T extends { key: React.Key }>({
+  columns,
+  data,
+  pagination,
+  loading,
+  handlePagination,
+}: TableProps<T>) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   return (
-    <Table<Quest>
+    <Table<T>
       rowKey="key"
       data-testid="quest-table"
+      scroll={{ x: 'max-content' }}
       loading={loading}
       columns={columns}
       dataSource={data}
@@ -30,12 +35,7 @@ const QuestTable: React.FC<TableProps> = ({ columns, data, pagination, loading }
         showSizeChanger: true,
         pageSizeOptions: ['5', '10', '15', '20'],
         showTotal: (total) => `${t('total')} ${total} ${t('items')}`,
-        onChange: (page, pageSize) => {
-          const params = new URLSearchParams(location.search);
-          params.set('page', page.toString());
-          params.set('limit', pageSize.toString());
-          navigate({ pathname: '/quest', search: params.toString() });
-        },
+        onChange: handlePagination,
       }}
     />
   );

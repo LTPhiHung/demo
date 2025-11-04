@@ -1,4 +1,5 @@
 {
+  "id": "Mã yêu cầu",
   "status": {
     "label": "Trạng thái",
     "description": "Chọn Trạng thái",
@@ -13,7 +14,9 @@
     "description": "Chọn loại nhiệm vụ",
     "all": "Tất cả loại nhiệm vụ",
     "common": "Nhiệm vụ thông thường",
-    "welcome": "Nhiệm vụ chào mừng"
+    "welcome": "Nhiệm vụ chào mừng",
+    "challengeType1": "Nhiệm vụ thông thường",
+    "challengeType2": "Nhiệm vụ chào mừng"
   },
   "title": {
     "label": "Tiêu đề"
@@ -22,6 +25,26 @@
     "label": "Điểm thưởng"
   },
   "submittedDate": "Ngày gửi",
-  "fullname": "Họ và tên",
-  "email": "Email"
+  "fullName": "Họ và tên",
+  "email": "Email",
+  "requestDetail": {
+    "requestId": "Mã yêu cầu",
+    "questId": "Mã nhiệm vụ",
+    "questTitle": "Tiêu đề nhiệm vụ",
+    "questType": "Loại nhiệm vụ",
+    "platform": "Nền tảng",
+    "point": "Điểm thưởng",
+    "description": "Mô tả",
+    "fullName": "Họ và tên",
+    "email": "Email",
+    "status": "Trạng thái",
+    "submittedDate": "Ngày gửi",
+    "updatedDate": "Ngày cập nhật",
+    "updatedBy": "Người cập nhật",
+    "evidences": "Bằng chứng",
+    "relatedLink": "Liên kết liên quan",
+    "status1": "Pending",
+    "status2": "Đã duyệt",
+    "status3": "Rejected"
+  }
 }

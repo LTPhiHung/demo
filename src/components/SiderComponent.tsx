@@ -35,7 +35,7 @@ const SiderComponent: React.FC<SiderComponentProps> = ({ collapsed }) => {
         }}
         items={[
           {
-            key: 'quest',
+            key: 'quest-menu',
             icon: <TrophyOutlined />,
             label: 'Quest',
             children: [
@@ -47,7 +47,7 @@ const SiderComponent: React.FC<SiderComponentProps> = ({ collapsed }) => {
             ],
           },
           {
-            key: 'blind-box',
+            key: 'blind-box-menu',
             icon: <GiftOutlined />,
             label: 'Blind Box',
             children: [

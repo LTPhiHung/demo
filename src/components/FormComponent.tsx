@@ -93,11 +93,12 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
           <Select allowClear placeholder={t('status.desciption')}>
             <Select.Option value={0}>Other</Select.Option>
             <Select.Option value={1}>Facebook</Select.Option>
-            <Select.Option value={2}>YouTube</Select.Option>
-            <Select.Option value={3}>Telegram</Select.Option>
-            <Select.Option value={4}>Tiktok</Select.Option>
-            <Select.Option value={5}>Twitter</Select.Option>
-            <Select.Option value={6}>Discord</Select.Option>
+            <Select.Option value={2}>Instagram</Select.Option>
+            <Select.Option value={3}>YouTube</Select.Option>
+            <Select.Option value={4}>Telegram</Select.Option>
+            <Select.Option value={5}>Tiktok</Select.Option>
+            <Select.Option value={6}>Twitter</Select.Option>
+            <Select.Option value={7}>Discord</Select.Option>
           </Select>
         </Form.Item>
 

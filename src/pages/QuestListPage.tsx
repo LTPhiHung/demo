@@ -4,19 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { useLoaderData, useNavigate, useNavigation, useSearchParams } from 'react-router-dom';
 import QuestTable from '../components/QuestTable';
 import SearchTable from '../components/SearchTable';
-import { Header, Section } from './QuestListPage.styles';
-import type { Paging, Quest } from '../interfaces/quest';
+import { Header } from './QuestListPage.styles';
+import type { Quest } from '../interfaces/quest';
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import type { SearchInput } from '../interfaces/searchInput';
+import type { Paging } from '../interfaces/paging';
+import ContentContainer from '../components/ContentContainer';
 interface LoaderData {
   data: Quest[];
   pagination: Paging;
-}
-
-interface SearchInput {
-  keywords: string;
-  status: string ;
-  type?: string;
 }
 
 const QuestListPage: React.FC = () => {
@@ -29,31 +26,37 @@ const QuestListPage: React.FC = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const currentKeywords  = searchParams.get('keywords') || '';
-  const currentStatus = searchParams.get('status') || 'all';
+  const currentStatus = Number(searchParams.get('status')) || 2;
 
   const [searchInput, setSearchInput] = useState<SearchInput>({
     keywords: currentKeywords,
     status: currentStatus,
   })
 
-const handleSearch = () => {
+  const handleSearch = () => {
     const params: Record<string, string> = {
       page: '1',
       limit: '20',
     };
     console.log(searchInput)
-    if (searchInput.keywords.trim()) params.keywords = searchInput.keywords.trim();
-    if (searchInput.status !== 'all') params.status = searchInput.status;
+    if (searchInput.keywords && searchInput.keywords.trim()) params.keywords = searchInput.keywords.trim();
+    if (searchInput.status !== 2) params.status = String(searchInput.status);
 
 
     setSearchParams(params);
   };
 
   const handleReset = () => {
-    setSearchInput({keywords: '', status: 'all'})
+    setSearchInput({keywords: '', status: 2})
     setSearchParams({}); // reset URL
   };
 
+  const handlePagination = (page: number, pageSize: number) => {
+    const params = new URLSearchParams(location.search);
+    params.set('page', page.toString());
+    params.set('limit', pageSize.toString());
+    navigate({ pathname: '/quest', search: params.toString() });
+  }
 
   const handleViewDetail = (record: Quest) => {
     navigate(`/quest/${record.id}`, { state: { quest:  record} });
@@ -97,10 +100,10 @@ const handleSearch = () => {
   return (
     <>
       {/* Search + Filter */}
-      <SearchTable handleReset={handleReset} handleSearch={handleSearch} setSearchInput={setSearchInput} searchInput={searchInput} />
+      <SearchTable handleReset={handleReset} status1={true} handleSearch={handleSearch} setSearchInput={setSearchInput} searchInput={searchInput} />
 
       {/* Table Section */}
-      <Section>
+      <ContentContainer>
         <Header>
           <Button
             type="primary"
@@ -112,8 +115,8 @@ const handleSearch = () => {
           </Button>
         </Header>
 
-        <QuestTable columns={columns} data={data} pagination={pagination} loading={loading} />
-      </Section>
+        <QuestTable<Quest> columns={columns} data={data} pagination={pagination} loading={loading} handlePagination={handlePagination} />
+      </ContentContainer>
     </>
   );
 };

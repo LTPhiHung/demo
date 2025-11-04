@@ -11,5 +11,24 @@
   "add": "Thêm",
   "total": "Tổng",
   "items": "mục",
-  "SearchQuest": "Tìm kiếm theo ID hoặc tiêu đề nhiệm vụ"
+  "SearchQuest": "Tìm kiếm theo ID hoặc tiêu đề nhiệm vụ",
+  "questType": {
+    "label": "Nhiệm vụ",
+    "description": "Chọn loại nhiệm vụ",
+    "all": "Tất cả loại nhiệm vụ",
+    "common": "Nhiệm vụ thông thường",
+    "welcome": "Nhiệm vụ chào mừng"
+  },
+  "status2": {
+    "label": "Trạng thái",
+    "description": "Chọn trạng thái",
+    "all": "Tất cả trạng thái",
+    "pending": "Đang chờ duyệt",
+    "approved": "Đã duyệt",
+    "rejected": "Từ chối duyệt"
+  },
+  "date": {
+    "start": "Ngày bắt đầu",
+    "end": "Ngày kết thúc"
+  }
 }

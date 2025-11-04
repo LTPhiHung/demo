@@ -1,37 +1,45 @@
-// src/hooks/useFetchQuestRequest.ts
 import { useEffect, useState } from 'react';
 import { message } from 'antd';
 import _ from 'lodash';
-import type { InputType, Paging, QuestRequest } from '../interfaces/questRequest';
 import axiosInstance from '../api/axiosInstance';
+import type { Paging } from '../interfaces/paging';
 
-export interface UseFetchQuestResult {
+export interface UseFetchQuestResult<T> {
   loading: boolean;
-  data: QuestRequest[];
-  pagination?: Paging;
+  data: T[];
+  pagination: Paging;
 }
 
-export const useFetchQuestRequest = (input: InputType): UseFetchQuestResult => {
+export const useFetch = <T, InputType>(
+  url: string,
+  input: InputType
+): UseFetchQuestResult<T> => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<QuestRequest[]>([]);
-  const [pagination, setPagination] = useState<Paging>();
+  const [data, setData] = useState<T[]>([]);
+  const [pagination, setPagination] = useState<Paging>({
+    maxPerPage: 20,
+    pageNumber: 1,
+    totalItem: 0,
+    totalPage: 0,
+  });
 
+  console.log(url, input)
   const fetchData = async () => {
     try {
       setLoading(true);
+      const res = await axiosInstance.post(url, input);
 
-      const res = await axiosInstance.post('/point-request/search', input);
-
-      const mappedData: QuestRequest[] = res.data?.data?.map((item: QuestRequest) => ({
-        ...item,
-        key: item.id,
-      })) ?? [];
+      const mappedData: T[] =
+        res.data?.data?.map((item: T & { id?: number }) => ({
+          ...item,
+          key: item.id,
+        })) ?? [];
 
       setData(mappedData);
-      setPagination(_.get(res, 'data.paging'));
+      setPagination(_.get(res, 'data.paging', pagination));
     } catch (error) {
       console.error(error);
-      message.error('Failed to fetch quest list!');
+      message.error('Failed to fetch data!');
     } finally {
       setLoading(false);
     }
@@ -39,7 +47,7 @@ export const useFetchQuestRequest = (input: InputType): UseFetchQuestResult => {
 
   useEffect(() => {
     fetchData();
-  }, [input]);
+  }, [url, JSON.stringify(input)]);
 
   return { loading, data, pagination };
 };

@@ -1,24 +1,5 @@
-export interface InputType {
-  limit: number;
-  page: number;
-  keywords: string;
-  status?: boolean;
-  questType: number;
-   submittedDate?: {
-    from: string; 
-    to: string;
-  };
-}
-
-export interface Paging {
-  maxPerPage: number;
-  pageNumber: number;
-  totalItem: number;
-  totalPage: number;
-}
-
-
 export interface QuestRequest {
+  key: number; 
   id: number;
   code: string;
   title: string;
@@ -28,4 +9,31 @@ export interface QuestRequest {
   status: number; 
   challengeType: number; 
   submittedDate: string;
+}
+
+
+export interface Evidence {
+  fileName: string;
+  fileUrl: string;
+  mimeType: string;
+}
+
+export interface RequestDetail {
+  id: number;
+  code: string;
+  challengeCode: string;
+  challengeType: number;
+  title: string;
+  rejectedReason: string | null;
+  point: number;
+  status: number;
+  email: string;
+  fullName: string;
+  evidence: Evidence[];
+  relatedLink: string;
+  submittedDate: string;
+  updatedAt: string;
+  updatedBy: string;
+  platform: number; 
+  description: string;
 }

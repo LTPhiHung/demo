@@ -3,19 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import QuestTable from '../components/QuestTable';
 import SearchTable from '../components/SearchTable';
-import { Section } from './QuestListPage.styles';
 import dayjs from 'dayjs';
 import type { QuestRequest } from '../interfaces/questRequest';
-import { useEffect, useState } from 'react';
-import { useFetchQuestRequest } from '../hooks/useFetchQuestRequest';
-
-interface SearchInput {
-  keywords: string;
-  status: string ;
-  type?: string;
-  date?: string;
-}
-
+import { useState } from 'react';
+import type { InputType, PaginationInput, SearchInput } from '../interfaces/searchInput';
+import _ from 'lodash';
+import ContentContainer from '../components/ContentContainer';
+import { useFetch } from '../hooks/useFetchQuestRequest';
 
 const QuestReQuestListPage = () => {
   const { t } = useTranslation('request');
@@ -25,34 +19,67 @@ const QuestReQuestListPage = () => {
     navigate(`/point-request/${record.id}`, { state: { quest:  record} });
   };
 
-  const [searchInput, setSearchInput] = useState<SearchInput>({
-      keywords: '',
-      status: 'all',
-      type: 'all',
-    })
+  const defaultPagination: PaginationInput = {
+    limit: 20,
+    page: 1,
+  }
 
-    const {data, pagination, loading} =  useFetchQuestRequest(searchInput);
+  const [searchInput, setSearchInput] = useState<SearchInput>({})
+  const [inputData, setInputData] = useState<InputType>(defaultPagination)
+
+  const {data, pagination, loading} =  useFetch<QuestRequest, InputType>('/point-request/search', inputData);
+
+  const handleSearch = () => {
+    let finalInput = { ...searchInput };
+
+    if (finalInput.status === 0) {
+      finalInput = _.omit(finalInput, 'status');
+    }
+
+    if (finalInput.questType === 0) {
+      finalInput = _.omit(finalInput, 'questType');
+    }
+    setInputData({...finalInput, ...defaultPagination});
+  };
+
+  const handleReset = () => {
+    setInputData(defaultPagination);
+  };
+
+  const handlePagination = (page: number, pageSize: number) => {
+    setInputData({...inputData, page, limit: pageSize})
+  }
 
   const columns = [
-    { title: t('id'), dataIndex: 'id', key: 'id', width: 160 },
-    { title: t('questType.label'), dataIndex: 'challengeType', key: 'challengeType' },
+    { title: t('id'), dataIndex: 'code', key: 'id' },
+    { 
+      title: t('questType.label'), 
+      dataIndex: 'challengeType', 
+      key: 'challengeType',
+      ellipsis: false,
+      render: (challengeType: number) => (
+          <Typography style={{ whiteSpace: 'nowrap'}}>
+              {challengeType === 1 ? t('questType.challengeType1') :t('questType.challengeType2')}
+          </Typography>
+      )
+    },
     { title: t('title.label'), dataIndex: 'title', key: 'title' },
     {
       title: t('point.label'),
       dataIndex: 'point',
       key: 'point',
       width: 160,
-      render: (value: number) => value.toLocaleString(),
+      render: (value: number) => value === 0 ? "-" : value.toLocaleString(),
     },
     { title: t('email'), dataIndex: 'email', key: 'email' },
-    { title: t('fullName'), dataIndex: 'fullName', key: 'fullName' },
+    { title: t('fullName'), dataIndex: 'fullName', key: 'fullName', render: (value: string) => <Typography style={{ whiteSpace: 'nowrap'}}>{value}</Typography> },
     {
       title: t('status.label'),
       dataIndex: 'status',
       key: 'status',
-      render: (status: boolean) => (
-        <Tag color={status ? 'blue' : 'red'}>
-          {status ? t('status.active') : t('status.inactive')}
+      render: (status: number) => (
+        <Tag color={status === 1 ? 'blue' : status === 2 ? 'green' : 'red'}>
+          {status === 1 ? t('status.pending') : status === 2 ? t('status.approved') : t('status.rejected')}
         </Tag>
       ),
     },
@@ -60,26 +87,26 @@ const QuestReQuestListPage = () => {
       title: t('submittedDate'),
       dataIndex: 'submittedDate',
       key: 'submittedDate',
-      width: 220,
-      render: (date: string | Date) => dayjs(date).format('MMM D, YYYY, HH:mm:ss'),
+      render: (date: string | Date) => <Typography style={{ whiteSpace: 'nowrap'}}>{dayjs(date).format('MMM D, YYYY, HH:mm:ss')}</Typography>,
     },
     {
       title: '',
       key: 'action',
-      render: (record: QuestRequest) => <Typography.Link style={{ color: '#1677ff' }} onClick={() => handleViewDetail(record)}>{t('detail')}</Typography.Link>,
-      width: 100,
+      fixed: 'right' as const,
+      ellipsis: false,
+      render: (record: QuestRequest) => <Typography.Link style={{ color: '#1677ff', whiteSpace: 'nowrap' }} onClick={() => handleViewDetail(record)}>{t('detail')}</Typography.Link>,
     },
   ];
 
   return (
     <>
       {/* Search + Filter */}
-      <SearchTable  typeSearch={true} dateSearch={true} />
+      <SearchTable status2={true} typeSearch={true} dateSearch={true} setSearchInput={setSearchInput} searchInput={searchInput} handleSearch={handleSearch} handleReset={handleReset} />
 
       {/* Table Section */}
-      <Section>
-        <QuestTable columns={columns} data={data} pagination={pagination} loading={loading}  />
-      </Section>
+      <ContentContainer>
+        <QuestTable<QuestRequest> columns={columns} data={data} pagination={pagination} loading={loading} handlePagination={handlePagination} />
+      </ContentContainer>
     </>
   );
 }

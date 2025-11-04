@@ -4,6 +4,8 @@ import MainLayout from './pages/MainLayout';
 import QuestListPage from './pages/QuestListPage';
 import { questLoader } from './loaders/questLoader';
 import QuestReQuestListPage from './pages/QuestReQuestListPage';
+import DetailQuestRequestPage from './pages/DetailQuestReQuestPage';
+import WelcomeQuestListPage from './pages/WelcomeQuestListPage';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
       {
         path: 'quest/:id',
         element: <AddQuestPage />,
+      },
+      {
+        path: 'point-request/:id',
+        element: <DetailQuestRequestPage />,
+      },
+      {
+        path: 'welcome-quest',
+        element: <WelcomeQuestListPage />,
       },
     ],
   },

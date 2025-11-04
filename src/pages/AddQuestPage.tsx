@@ -1,20 +1,19 @@
 /** @jsxImportSource @emotion/react */
-import { ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
-import { Typography } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { FormComponent } from '../components/FormComponent';
-import { AddButton, BackButton, Header, Section, Wrapper } from './AddQuestPage.styles';
 import type { Quest } from '../interfaces/quest';
-
-const { Title } = Typography;
+import { AddButton, Header } from './AddQuestPage.styles';
+import BackSection from '../components/BackSection';
+import ContentContainer from '../components/ContentContainer';
 
 const AddNewQuestForm: React.FC = () => {
   const { t } = useTranslation('quest');
-  const navigate = useNavigate();
   const [isFormComplete, setIsFormComplete] = useState(false);
   const defaultValue: Quest = {
+    key: 0,
     title: '',
     point: 1,
     accountRanks: [],
@@ -35,21 +34,10 @@ const AddNewQuestForm: React.FC = () => {
   const location = useLocation();
   const questData = location.state?.quest ?? defaultValue;
   return (
-    <Wrapper>
+    <ContentContainer>
       {/* Header */}
       <Header>
-        <Section>
-          <BackButton
-            data-testid="back-button"
-            onClick={() => navigate('/quest')}
-          >
-            <ArrowLeftOutlined style={{ fontSize: 14, cursor: 'pointer' }} />
-          </BackButton>
-
-          <Title level={4} style={{ margin: 0, fontWeight: 'bold' }}>
-            {questData.challengeCode !== '' ? questData.challengeCode: t('addNewQuest')}
-          </Title>
-        </Section>
+        <BackSection page='quest' title={questData.challengeCode} />
 
         <AddButton
           type="primary"
@@ -62,7 +50,7 @@ const AddNewQuestForm: React.FC = () => {
 
       {/* Form */}
       <FormComponent setIsFormComplete={setIsFormComplete} questData={questData} />
-    </Wrapper>
+    </ContentContainer>
   );
 };
 

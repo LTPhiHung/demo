@@ -1,13 +1,6 @@
 import { Button, Space } from 'antd';
 import styled from '@emotion/styled';
 
-export const Section = styled.section(() => ({
-  marginBottom: 24,
-  padding: 24,
-  background: '#fff',
-  borderRadius: 8,
-}));
-
 export const StyledSpace = styled(Space)(() => ({
   width: '100%',
   display: 'inline-flex',

@@ -1,5 +1,13 @@
-import type { Quest, InputType, Paging } from '../interfaces/quest';
+import type { Quest } from '../interfaces/quest';
 import axiosInstance from '../api/axiosInstance';
+import type { Paging } from '../interfaces/paging';
+
+interface InputType {
+  limit: number;
+  page: number;
+  keywords: string;
+  status?: boolean;
+}
 
 export const questLoader = async ({ request }: { request: Request }) => {
   const url = new URL(request.url);
@@ -12,9 +20,9 @@ export const questLoader = async ({ request }: { request: Request }) => {
     page: Number(page),
     keywords,
     limit: Number(limit),
-    ...(statusParam === 'active'
+    ...(statusParam === '1'
       ? { status: true }
-      : statusParam === 'inactive'
+      : statusParam === '0'
         ? { status: false }
         : {}),
   };
@@ -28,9 +36,10 @@ export const questLoader = async ({ request }: { request: Request }) => {
     })) ?? [];
 
     const pagination: Paging = res.data?.paging ?? {
-      total: 0,
-      page: Number(page),
-      limit: Number(limit),
+      maxPerPage: 20, 
+      pageNumber: Number(limit), 
+      totalItem: 0, 
+      totalPage: Number(page)
     };
 
     return { data, pagination };
@@ -40,9 +49,10 @@ export const questLoader = async ({ request }: { request: Request }) => {
     return {
       data: [],
       pagination: {
-        total: 0,
-        page: Number(page),
-        limit: Number(limit),
+        maxPerPage: 20, 
+        pageNumber: Number(limit), 
+        totalItem: 0, 
+        totalPage: Number(page)
       },
     };
   }

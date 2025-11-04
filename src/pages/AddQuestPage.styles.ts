@@ -1,12 +1,6 @@
 import { Button } from 'antd';
 import styled from '@emotion/styled';
 
-export const Wrapper = styled.div({
-  padding: 24,
-  background: '#fff',
-  borderRadius: 8,
-});
-
 export const Header = styled.div({
   display: 'flex',
   alignItems: 'center',

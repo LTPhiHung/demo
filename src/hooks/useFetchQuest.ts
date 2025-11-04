@@ -2,8 +2,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { message } from 'antd';
-import type { Quest, InputType, Paging } from '../interfaces/quest';
+import type { Quest } from '../interfaces/quest';
 import _ from 'lodash';
+import type { InputType } from '../interfaces/searchInput';
+import type { Paging } from '../interfaces/paging';
 
 export interface UseFetchQuestResult {
   loading: boolean;

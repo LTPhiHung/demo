@@ -1,12 +1,6 @@
 import type dayjs from "dayjs";
-export interface InputType {
-  limit: number;
-  page: number;
-  keywords: string;
-  status?: boolean;
-}
-
 export interface Quest {
+  key: number;
   challengeCode: string;
   id: string;
   title: string;
@@ -25,9 +19,4 @@ export interface Quest {
   updatedBy: string | null;
 }
 
-export interface Paging {
-  maxPerPage: number;
-  pageNumber: number;
-  totalItem: number;
-  totalPage: number;
-}
+
