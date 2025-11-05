@@ -12,6 +12,7 @@
   "total": "Tổng",
   "items": "mục",
   "SearchQuest": "Tìm kiếm theo ID hoặc tiêu đề nhiệm vụ",
+  "SearchRedeem":"Tìm kiếm theo mã đổi thưởng",
   "questType": {
     "label": "Nhiệm vụ",
     "description": "Chọn loại nhiệm vụ",

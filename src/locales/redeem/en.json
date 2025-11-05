@@ -1,0 +1,41 @@
+{
+  "status": {
+    "label": "Status",
+    "description": "Select status",
+    "available": "Available",
+    "soldOut": "Sold Out"
+  },
+  "detail": "Detail",
+  "point": {
+    "label": "Point",
+    "message1": "Vui lòng điền vào trường này",
+    "message2": "Điểm phải nằm trong khoảng từ 1 đến 100000."
+  },
+  "add": "Add",
+  "active": "Active",
+  "expiryDate": {
+    "label": "Expiry Date",
+    "description": "Select date"
+  },
+  "accountRanks": {
+    "label": "Account Ranks",
+    "message": "Please fill out this field",
+    "sliver": "Silver",
+    "gold": "Gold",
+    "diamond": "Diamond"
+  },
+  "addNew": "Create Redeem Code",
+  "redeemCode": "Redeem Code",
+  "percentageAmount" : "Percentage Amount",
+  "fixAmount": "Fix Amount",
+  "redeemedQuantities": "Redeemed Quantities",
+  "allowedQuantities": "Allowed Quantities",
+  "validityPeriod": "Validity Period",
+  "publicUser": "Public User",
+  "percentage": "Percentage",
+  "percentageOff": "Percentage Off",
+  "maximumDiscountAmount": "Maximum Discount Amount",
+  "fixAmountDetail": "Fix Amount",
+  "fixAmountInput": "Fix Amount",
+  "discountType": "Discount Type"
+}

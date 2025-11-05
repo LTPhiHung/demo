@@ -11,7 +11,7 @@ interface TableProps<T> {
   handlePagination: (page: number, pageSize: number) => void;
 }
 
-function QuestTable<T extends { key: React.Key }>({
+function TableComponent<T extends { id: React.Key }>({
   columns,
   data,
   pagination,
@@ -22,7 +22,7 @@ function QuestTable<T extends { key: React.Key }>({
 
   return (
     <Table<T>
-      rowKey="key"
+      rowKey="id"
       data-testid="quest-table"
       scroll={{ x: 'max-content' }}
       loading={loading}
@@ -41,4 +41,4 @@ function QuestTable<T extends { key: React.Key }>({
   );
 };
 
-export default QuestTable;
+export default TableComponent;

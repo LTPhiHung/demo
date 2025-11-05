@@ -10,38 +10,49 @@ import ContentContainer from './ContentContainer';
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
+export interface StatusOption {
+  label: string;
+  value: number;
+}
 
 interface PageProps {
-  status1?: boolean;
-  status2?: boolean;
+  statusOptions?: StatusOption[];
   typeSearch?: boolean;
   dateSearch?: boolean;
   handleSearch?: () => void;
   handleReset?: () => void;
   setSearchInput: (value: SearchInput) => void;
   searchInput: SearchInput;
+  isMultipleStatus?: boolean;
+  textSearch?: string;
 }
 
 const SearchTable: React.FC<PageProps> = ({
-  status1,
-  status2,
+  statusOptions,
   typeSearch,
   dateSearch,
   handleSearch,
   handleReset,
   setSearchInput,
   searchInput,
+  isMultipleStatus = false,
+  textSearch = 'SearchQuest'
 }) => {
   const { t } = useTranslation('common');
 
-  const handleChangeStatus = (value: number) =>
+  const defaultStatusOptions: StatusOption[] =
+    statusOptions || [
+      { label: t('status.all'), value: 2 },
+      { label: t('status.active'), value: 1 },
+      { label: t('status.inactive'), value: 0 },
+  ];
+
+  const handleChangeStatus = (value: number) => 
     setSearchInput({ ...searchInput, status: value });
 
-  const handleChangeKeywords = (value: string) => {
-    if(value.trim()) {
+  const handleChangeKeywords = (value: string) =>
       setSearchInput({ ...searchInput, keywords: value });
-    }
-  }
+
   const handleChangeType = (value: number) =>
     setSearchInput({ ...searchInput, questType: value });
 
@@ -54,48 +65,27 @@ const SearchTable: React.FC<PageProps> = ({
     } });
   };
 
-  console.log(searchInput)
-
   return (
     <ContentContainer style={{ marginBottom: 24 }}>
       <StyledSpace>
         <Input
-          placeholder={t('SearchQuest')}
+          placeholder={t(`${textSearch}`)}
           style={{ width: 300 }}
           data-testid="search-input"
-          value={searchInput?.keywords || ''}
+          value={searchInput?.keywords}
           onChange={(e) => handleChangeKeywords(e.target.value)}
         />
-        {status1 && (
-          <Select
-            allowClear
-            value={searchInput?.status}
-            placeholder={t('status.description')}
-            style={{ width: 180 }}
-            onChange={handleChangeStatus}
-            data-testid="filter-status"
-          >
-            <Option value={2}>{t('status.all')}</Option>
-            <Option value={1}>{t('status.active')}</Option>
-            <Option value={0}>{t('status.inactive')}</Option>
-          </Select>
-          )}
-
-        {status2 && (
-          <Select
-            allowClear
-            value={searchInput?.status || 0}
-            placeholder={t('status2.description')}
-            style={{ width: 180 }}
-            onChange={handleChangeStatus}
-            data-testid="filter-status2"
-          >
-            <Option value={0}>{t('status2.all')}</Option>
-            <Option value={1}>{t('status2.pending')}</Option>
-            <Option value={2}>{t('status2.approved')}</Option>
-            <Option value={3}>{t('status2.rejected')}</Option>
-          </Select>
-        )}
+        
+        <Select
+          allowClear
+          {...(isMultipleStatus ? { mode: 'multiple', maxTagCount: 'responsive' } : {})}
+          value={searchInput?.status}
+          placeholder={t('status.description')}
+          style={{ width: 180 }}
+          onChange={handleChangeStatus}
+          options={defaultStatusOptions}
+          data-testid="filter-status"
+        />
 
         {typeSearch && (
           <Select

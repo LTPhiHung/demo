@@ -1,6 +1,5 @@
 import type dayjs from "dayjs";
 export interface Quest {
-  key: number;
   challengeCode: string;
   id: string;
   title: string;

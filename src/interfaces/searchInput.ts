@@ -2,7 +2,7 @@ export interface InputType {
   limit: number;
   page: number;
   keywords?: string;
-  status?: number | boolean;
+  status?: number | boolean | number[];
   questType?: number;
    submittedDate?: {
     from: string; 

@@ -1,16 +1,14 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, Tag, Typography } from 'antd';
+import { Tag, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLoaderData, useNavigate, useNavigation, useSearchParams } from 'react-router-dom';
-import QuestTable from '../components/QuestTable';
-import SearchTable from '../components/SearchTable';
-import { Header } from './QuestListPage.styles';
-import type { Quest } from '../interfaces/quest';
+import TableComponent from '../../components/TableComponent';
+import SearchTable from '../../components/SearchTable';
+import type { Quest } from '../../interfaces/quest';
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import type { SearchInput } from '../interfaces/searchInput';
-import type { Paging } from '../interfaces/paging';
-import ContentContainer from '../components/ContentContainer';
+import type { SearchInput } from '../../interfaces/searchInput';
+import type { Paging } from '../../interfaces/paging';
+import TableContainer from '../../components/TableContainer';
 interface LoaderData {
   data: Quest[];
   pagination: Paging;
@@ -59,11 +57,11 @@ const QuestListPage: React.FC = () => {
   }
 
   const handleViewDetail = (record: Quest) => {
-    navigate(`/quest/${record.id}`, { state: { quest:  record} });
+    navigate(`/quest/${record.id}`, { state: { mode: 'detail', data:  record} });
   };
 
   const columns = [
-    { title: 'ID', dataIndex: 'id', key: 'id', width: 160 },
+    { title: 'ID', dataIndex: 'challengeCode', key: 'id', width: 160 },
     { title: t('title.label'), dataIndex: 'title', key: 'title' },
     {
       title: t('point.label'),
@@ -97,26 +95,21 @@ const QuestListPage: React.FC = () => {
     },
   ];
 
+  const statusOptions = [
+  { label: t('status.all'), value: 2 },
+  { label: t('status.active'), value: 1 },
+  { label: t('status.inactive'), value: 0 },
+];
+
   return (
     <>
       {/* Search + Filter */}
-      <SearchTable handleReset={handleReset} status1={true} handleSearch={handleSearch} setSearchInput={setSearchInput} searchInput={searchInput} />
+      <SearchTable handleReset={handleReset} statusOptions={statusOptions} handleSearch={handleSearch} setSearchInput={setSearchInput} searchInput={searchInput} />
 
       {/* Table Section */}
-      <ContentContainer>
-        <Header>
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-          data-testid="button-add"
-            onClick={() => navigate('/add')}
-          >
-            {t('add')}
-          </Button>
-        </Header>
-
-        <QuestTable<Quest> columns={columns} data={data} pagination={pagination} loading={loading} handlePagination={handlePagination} />
-      </ContentContainer>
+      <TableContainer isAdd={true}>
+        <TableComponent<Quest> columns={columns} data={data} pagination={pagination} loading={loading} handlePagination={handlePagination} />
+      </TableContainer>
     </>
   );
 };

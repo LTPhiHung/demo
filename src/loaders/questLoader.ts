@@ -1,13 +1,8 @@
 import type { Quest } from '../interfaces/quest';
 import axiosInstance from '../api/axiosInstance';
 import type { Paging } from '../interfaces/paging';
+import type { InputType } from '../interfaces/searchInput';
 
-interface InputType {
-  limit: number;
-  page: number;
-  keywords: string;
-  status?: boolean;
-}
 
 export const questLoader = async ({ request }: { request: Request }) => {
   const url = new URL(request.url);
@@ -30,10 +25,7 @@ export const questLoader = async ({ request }: { request: Request }) => {
   try {
     const res = await axiosInstance.post('/quest/search', input);
 
-    const data: Quest[] = res.data?.data?.map((item: Quest) => ({
-      ...item,       
-      key: item.id
-    })) ?? [];
+    const data: Quest[] = res.data?.data?.map((item: Quest) => (item)) ?? [];
 
     const pagination: Paging = res.data?.paging ?? {
       maxPerPage: 20, 

@@ -46,5 +46,6 @@
     "status1": "Pending",
     "status2": "Approved",
     "status3": "Rejected"
-  }
+  },
+  "addNew": "Add New Welcome Quest"
 }

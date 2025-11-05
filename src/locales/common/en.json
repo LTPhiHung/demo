@@ -12,6 +12,7 @@
   "total": "Total",
   "items": "items",
   "SearchQuest": "Search by Quest ID/Quest Title",
+  "SearchRedeem":"Search by Quest Redeem Code",
   "questType": {
     "label": "Quest type",
     "description": "Select Quest type",

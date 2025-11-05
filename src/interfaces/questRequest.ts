@@ -1,5 +1,4 @@
 export interface QuestRequest {
-  key: number; 
   id: number;
   code: string;
   title: string;

@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import AddNewQuestForm from '../pages/AddQuestPage';
+import AddNewQuestForm from '../pages/Detail/DetailQuestPage';
 import userEvent from '@testing-library/user-event';
 
 const mockNavigate = vi.fn();

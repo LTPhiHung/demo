@@ -1,11 +1,15 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import AddQuestPage from './pages/AddQuestPage';
+import DetailQuestPage from './pages/Detail/DetailQuestPage';
 import MainLayout from './pages/MainLayout';
-import QuestListPage from './pages/QuestListPage';
+import QuestListPage from './pages/List/QuestListPage';
 import { questLoader } from './loaders/questLoader';
-import QuestReQuestListPage from './pages/QuestReQuestListPage';
-import DetailQuestRequestPage from './pages/DetailQuestReQuestPage';
-import WelcomeQuestListPage from './pages/WelcomeQuestListPage';
+import QuestReQuestListPage from './pages/List/QuestReQuestListPage';
+import DetailQuestRequestPage from './pages/Detail/DetailQuestReQuestPage';
+import WelcomeQuestListPage from './pages/List/WelcomeQuestListPage';
+import DetailWelcomeQuestPage from './pages/Detail/DetailWelcomeQuestPage';
+import NotFoundPage from './pages/NotfoundPage';
+import RedeemListPage from './pages/List/RedeemListPage';
+import ReemDetailPage from './pages/Detail/ReemDetailPage';
 
 const router = createBrowserRouter([
   {
@@ -22,12 +26,12 @@ const router = createBrowserRouter([
         element: <QuestReQuestListPage />,
       },
       {
-        path: 'add',
-        element: <AddQuestPage />,
+        path: 'quest/create',
+        element: <DetailQuestPage />,
       },
       {
         path: 'quest/:id',
-        element: <AddQuestPage />,
+        element: <DetailQuestPage />,
       },
       {
         path: 'point-request/:id',
@@ -36,6 +40,26 @@ const router = createBrowserRouter([
       {
         path: 'welcome-quest',
         element: <WelcomeQuestListPage />,
+      },
+      {
+        path: 'welcome-quest/create',
+        element: <DetailWelcomeQuestPage />,
+      },
+      {
+        path: 'welcome-quest/:id',
+        element: <DetailWelcomeQuestPage />,
+      },
+      {
+        path: 'redeem',
+        element: <RedeemListPage />,
+      },
+      {
+        path: 'redeem/:id',
+        element: <ReemDetailPage />,
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />,
       },
     ],
   },

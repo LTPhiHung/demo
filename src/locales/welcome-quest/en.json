@@ -35,7 +35,7 @@
     "message": "At least required image or required link checked"
   },
   "allowMultipleSubmission": "Allow Multiple Submission",
-  "addNew": "Add New Quest",
+  "addNew": "Add New Welcome Quest",
   "description": {
     "label": "Description",
     "placeholder": "Description Here.",

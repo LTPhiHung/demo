@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import QuestListPage from '../pages/QuestListPage';
+import QuestListPage from '../pages/List/QuestListPage';
 
 vi.mock('../loaders/questLoader', () => ({
   questLoader: vi.fn(),

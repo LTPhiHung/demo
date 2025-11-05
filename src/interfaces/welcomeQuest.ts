@@ -1,5 +1,4 @@
-export interface WelcomeRequest {
-  key: number;
+export interface WelcomeQuest {
   id: number;
   challengeCode: string;
   title: string;

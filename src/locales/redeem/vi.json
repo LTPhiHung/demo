@@ -1,0 +1,41 @@
+{
+  "status": {
+    "label": "Trạng thái",
+    "description": "Chọn Trạng thái",
+    "available": "Còn hiệu lực",
+    "soldOut": "Hết lượt"
+  },
+  "detail": "Chi tiết",
+  "point": {
+    "label": "Điểm",
+    "message1": "Vui lòng điền vào trường này",
+    "message2": "Điểm phải nằm trong khoảng từ 1 đến 100000."
+  },
+  "add": "Thêm",
+  "active": "Hoạt động",
+  "expiryDate": {
+    "label": "Ngày hết hạn",
+    "description": "chọn ngày"
+  },
+  "accountRanks": {
+    "label": "Cấp bậc tài khoản",
+    "message": "Vui lòng chọn ít nhất một cấp bậc!",
+    "sliver": "Bac",
+    "gold": "Vàng",
+    "diamond": "Kim Cương"
+  },
+  "addNew": "Tạo mã đổi thưởng",
+  "redeemCode": "Mã đổi thưởng",
+  "percentageAmount" : "Phần trăm giảm giá",
+  "fixAmount": "Giá trị giảm cố định",
+  "redeemedQuantities": "Số lượng đã đổi",
+  "allowedQuantities": "Số lượng cho phép",
+  "validityPeriod": "Thời hạn hiệu lực",
+  "publicUser": "Người dùng công kha",
+  "percentage": "Theo phần trăm",
+  "percentageOff": "Phần trăm giảm",
+  "maximumDiscountAmount": "Số tiền giảm tối đa",
+  "fixAmountDetail": "Theo số tiền cố định",
+  "fixAmountInput": "Số tiền giảm cố định",
+  "discountType": "Loại giảm giá"
+}

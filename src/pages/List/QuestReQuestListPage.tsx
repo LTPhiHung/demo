@@ -1,15 +1,15 @@
 import { Tag, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import QuestTable from '../components/QuestTable';
-import SearchTable from '../components/SearchTable';
+import TableComponent from '../../components/TableComponent';
+import SearchTable from '../../components/SearchTable';
 import dayjs from 'dayjs';
-import type { QuestRequest } from '../interfaces/questRequest';
+import type { QuestRequest } from '../../interfaces/questRequest';
 import { useState } from 'react';
-import type { InputType, PaginationInput, SearchInput } from '../interfaces/searchInput';
+import type { InputType, PaginationInput, SearchInput } from '../../interfaces/searchInput';
 import _ from 'lodash';
-import ContentContainer from '../components/ContentContainer';
-import { useFetch } from '../hooks/useFetchQuestRequest';
+import { useFetch } from '../../hooks/useFetchQuestRequest';
+import TableContainer from '../../components/TableContainer';
 
 const QuestReQuestListPage = () => {
   const { t } = useTranslation('request');
@@ -98,15 +98,23 @@ const QuestReQuestListPage = () => {
     },
   ];
 
+  const statusOptions = [
+    { label: t('status.all'), value: 0 },
+    { label: t('status.pending'), value: 1 },
+    { label: t('status.approved'), value: 2 },
+    { label: t('status.rejected'), value: 3 },
+  ];
+
+
   return (
     <>
       {/* Search + Filter */}
-      <SearchTable status2={true} typeSearch={true} dateSearch={true} setSearchInput={setSearchInput} searchInput={searchInput} handleSearch={handleSearch} handleReset={handleReset} />
+      <SearchTable statusOptions={statusOptions} typeSearch={true} dateSearch={true} setSearchInput={setSearchInput} searchInput={searchInput} handleSearch={handleSearch} handleReset={handleReset} />
 
       {/* Table Section */}
-      <ContentContainer>
-        <QuestTable<QuestRequest> columns={columns} data={data} pagination={pagination} loading={loading} handlePagination={handlePagination} />
-      </ContentContainer>
+      <TableContainer>
+        <TableComponent<QuestRequest> columns={columns} data={data} pagination={pagination} loading={loading} handlePagination={handlePagination} />
+      </TableContainer>
     </>
   );
 }

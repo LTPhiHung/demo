@@ -1,11 +1,11 @@
 import React from "react";
 import { Descriptions, Image, Typography, Tag, Row, Col, Divider, Button, Flex } from "antd";
-import BackSection from '../components/BackSection';
-import ContentContainer from "../components/ContentContainer";
+import BackSection from '../../components/BackSection';
+import ContentContainer from "../../components/ContentContainer";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { useGetData } from "../hooks/useGetData";
-import type { RequestDetail } from "../interfaces/questRequest";
+import { useGetData } from "../../hooks/useGetData";
+import type { RequestDetail } from "../../interfaces/questRequest";
 
 const { Link } = Typography;
 

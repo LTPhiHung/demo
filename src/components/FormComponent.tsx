@@ -9,15 +9,16 @@ const { TextArea } = Input;
 interface Props {
   questData: Quest;
   setIsFormComplete: (value: boolean) => void;
+  isInvisible?: boolean;
 }
 
 const accountRanksOptions = [
-  { label: 'accountRank.sliver', value: 'sliver' },
-  { label: 'accountRank.gold', value: 'gold' },
-  { label: 'accountRank.diamond', value: 'diamond' },
+  { label: 'accountRank.sliver', value: 1 },
+  { label: 'accountRank.gold', value: 2 },
+  { label: 'accountRank.diamond', value: 3 },
 ];
 
-export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete }) => {
+export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete, isInvisible }) => {
   const [form] = Form.useForm();
   const { t } = useTranslation('quest');
   const [formData, setFormData] = useState(questData);
@@ -38,8 +39,7 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
       <Form
         form={form}
         layout="horizontal"
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
+        labelCol={{ style: { width: 283, textAlign: 'left' } }}
         scrollToFirstError
         initialValues={formData} // Dùng initialValues thay cho defaultValue
         onValuesChange={(allValues) => {
@@ -47,32 +47,38 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
         }}
       >
         {/* Active */}
-        <Form.Item
+        {!isInvisible && <Form.Item
           label={t('status.active') + ' :'}
           name="status"
           valuePropName="checked"
-          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Switch />
-        </Form.Item>
+        </Form.Item>}
 
         {/* Title */}
         <Form.Item
           label={t('title.label') + ' :'}
           name="title"
           rules={[{ required: true, message: t('title.message') }]}
-          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Input placeholder={t('title.placeholder')} maxLength={200} />
         </Form.Item>
 
+          {isInvisible && <Form.Item
+          label={t('status.active') + ' :'}
+          name="status"
+          valuePropName="checked"
+          wrapperCol={{ flex: 1 }}
+        >
+          <Switch />
+        </Form.Item>}
+
         {/* Expiry Date */}
-        <Form.Item
+        {!isInvisible &&  <Form.Item
           label={t('expiryDate.label') + ' :'}
           name="expiryDate"
-          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <DatePicker
@@ -81,13 +87,12 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
             disabledDate={(current) => current && current < dayjs().startOf('day')}
             allowClear
           />
-        </Form.Item>
+        </Form.Item>}
 
         {/* Platform */}
         <Form.Item
           label={t('platform') + ' :'}
           name="platform"
-          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Select allowClear placeholder={t('status.desciption')}>
@@ -102,8 +107,22 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
           </Select>
         </Form.Item>
 
+          {/* Expiry Date */}
+        {isInvisible &&  <Form.Item
+          label={t('expiryDate.label') + ' :'}
+          name="expiryDate"
+          wrapperCol={{ flex: 1 }}
+        >
+          <DatePicker
+            style={{ width: '100%' }}
+            placeholder={t('expiryDate.description')}
+            disabledDate={(current) => current && current < dayjs().startOf('day')}
+            allowClear
+          />
+        </Form.Item>}
+
         {/* Point */}
-        <Form.Item
+        {!isInvisible && <Form.Item
           label={t('point.label') + ' :'}
           name="point"
           rules={[
@@ -116,29 +135,26 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
               message: t('point.message2'),
             },
           ]}
-          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Input type="number" placeholder="Enter points" />
-        </Form.Item>
+        </Form.Item>}
 
         {/* Account Ranks */}
-        <Form.Item
+        {!isInvisible && <Form.Item
           label={t('accountRanks.label') + ' :'}
-          name="accountRanks"
+          name="accountRank"
           rules={[{ required: true, message: t('accountRanks.message'), type: 'array' }]}
-          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Checkbox.Group options={accountRanksOptions} />
-        </Form.Item>
+        </Form.Item>}
 
         {/* Required Upload Image */}
         <Form.Item
           label={t('requiredSwitch.uploadImage') + ' :'}
           name="requiredUploadEvidence"
           valuePropName="checked"
-          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
           dependencies={['requiredEnterLink']}
           rules={[
@@ -161,7 +177,6 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
           label={t('requiredSwitch.enterLink') + ' :'}
           name="requiredEnterLink"
           valuePropName="checked"
-          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
           dependencies={['requiredEnterUpload']}
           rules={[
@@ -180,15 +195,14 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
         </Form.Item>
 
         {/* Allow Multiple Submission */}
-        <Form.Item
+        {!isInvisible && <Form.Item
           label={t('allowMultipleSubmission') + ' :'}
           name="allowSubmitMultiple"
           valuePropName="checked"
-          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <Switch />
-        </Form.Item>
+        </Form.Item>}
 
         {/* Description */}
         <Form.Item
@@ -198,7 +212,6 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
             { required: true, message: t('description.message1') },
             { max: 2000, message: t('description.message2') },
           ]}
-          labelCol={{ style: { width: 283, textAlign: 'left' } }}
           wrapperCol={{ flex: 1 }}
         >
           <TextArea placeholder={t('description.placeholder')} rows={3} />
