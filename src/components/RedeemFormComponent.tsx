@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { Redeem } from '../interfaces/redeem';
 
 interface Props {
-  questData: Redeem;
+  questData: Redeem | null;
   setIsFormComplete: (value: boolean) => void;
   isInvisible?: boolean;
 }
@@ -13,7 +13,7 @@ export const RedeemFormComponent: React.FC<Props> = ({ questData, isInvisible=fa
   const [form] = Form.useForm();
   const { t } = useTranslation('redeem');
   const [formData, setFormData] = useState(questData);
-  const [isPercentage, setIsPercentage] = useState<number>(questData.isPercentage);
+  const [isPercentage, setIsPercentage] = useState(questData?.isPercentage);
 
   const accountRanksOptions = [
     { label: t('accountRanks.sliver'), value: 1 },
@@ -30,7 +30,7 @@ export const RedeemFormComponent: React.FC<Props> = ({ questData, isInvisible=fa
         wrapperCol={{ span: 17 }}
         scrollToFirstError
         disabled={isInvisible}
-        initialValues={formData} // Dùng initialValues thay cho defaultValue
+        initialValues={formData || undefined} // Dùng initialValues thay cho defaultValue
         onValuesChange={(allValues) => {
           setFormData((prev) => ({ ...prev, ...allValues }));
         }}
@@ -51,8 +51,8 @@ export const RedeemFormComponent: React.FC<Props> = ({ questData, isInvisible=fa
             name="status"
             wrapperCol={{ flex: 1 }}
             >
-                <Tag color={questData.status === 1 ? 'green' : 'red'}>
-                    {questData.status === 1 ? t('status.available') :  t('status.soldOut')}
+                <Tag color={questData?.status === 1 ? 'green' : 'red'}>
+                    {questData?.status === 1 ? t('status.available') :  t('status.soldOut')}
                 </Tag>
             </Form.Item>
             <Form.Item
@@ -157,8 +157,8 @@ export const RedeemFormComponent: React.FC<Props> = ({ questData, isInvisible=fa
         <Radio.Group
           onChange={(e) => setIsPercentage(e.target.value)}
           options={[
-            { label: t('percentage'), value: 1 },
-            { label: t('fixAmountDetail'), value: 0 },
+            { label: t('percentage'), value: true },
+            { label: t('fixAmountDetail'), value: false },
           ]}
         />
       </Form.Item>
@@ -168,7 +168,7 @@ export const RedeemFormComponent: React.FC<Props> = ({ questData, isInvisible=fa
             <Col span={17}>
                 <Card style={{ width: '100%' }}>
                     {/* Conditional fields */}
-                    {isPercentage === 1 && (
+                    {isPercentage ? (
                         <>
                         <Form.Item
                             label={t('percentageOff') + ' :'}
@@ -202,9 +202,9 @@ export const RedeemFormComponent: React.FC<Props> = ({ questData, isInvisible=fa
                             <Input type="number" placeholder="Enter maximum discount amount" />
                         </Form.Item>
                         </>
-                    )}
+                    )
 
-                    {isPercentage === 0 && (
+                    : (
                         <Form.Item
                         label={t('fixAmountInput') + ' :'}
                         name="fixAmount"

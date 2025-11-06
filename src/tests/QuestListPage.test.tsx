@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider, useSearchParams } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import QuestListPage from '../pages/List/QuestListPage';
 
@@ -20,7 +20,8 @@ vi.mock('react-router-dom', async (importOriginal) => {
   const actual = await importOriginal<typeof import('react-router-dom')>();
   return {
     ...actual,
-    useNavigate: () => mockNavigate,
+     useNavigate: () => mockNavigate,
+    useSearchParams: vi.fn(),
     useLoaderData: () => ({
       data: loaderData,
       pagination: { pageNumber: 1, maxPerPage: 10, totalItem: 2 },
@@ -29,10 +30,9 @@ vi.mock('react-router-dom', async (importOriginal) => {
   };
 });
 
-beforeEach(() => {
-  mockNavigate.mockReset();
-});
+const mockSetSearchParams = vi.fn();
 
+  
 // 🧩 Helper render
 const renderWithRouter = (ui: React.ReactNode) => {
   const router = createMemoryRouter([{ path: '/', element: ui, loader: mockedQuestLoader }], { initialEntries: ['/'] });
@@ -40,6 +40,18 @@ const renderWithRouter = (ui: React.ReactNode) => {
 };
 
 describe('Kiểm tra màn hình Quest List Page', () => {
+  beforeEach(() => {
+    mockNavigate.mockReset();
+  });
+
+  beforeEach(() => {
+  vi.mocked(useSearchParams).mockReturnValue([
+    new URLSearchParams(''),
+    mockSetSearchParams,
+  ]);
+  mockSetSearchParams.mockClear();
+});
+
   it('1. Render: Hiển thị bảng với tiêu đề cột', async () => {
     renderWithRouter(<QuestListPage />);
     const table = await screen.findByTestId('quest-table');
@@ -71,10 +83,6 @@ describe('Kiểm tra màn hình Quest List Page', () => {
     const rows = utils.getAllByRole('row');
     expect(rows.length).toBeGreaterThanOrEqual(3);
   });
-    beforeEach(() => {
-        mockNavigate.mockReset();
-    });
-
 
   it('3. Search: hiển thị đúng dữ liệu khi nhập input search và nhấn Search', async () => {
   // Set loaderData ban đầu
@@ -100,11 +108,12 @@ describe('Kiểm tra màn hình Quest List Page', () => {
   fireEvent.click(searchButton);
 
   await waitFor(() => {
-    expect(mockNavigate).toHaveBeenCalledWith({
-      pathname: '/quest',
-      search: expect.stringContaining('keywords=Quest+B'),
+      expect(mockSetSearchParams).toHaveBeenCalledWith({
+        page: '1',
+        limit: '20',
+        keywords: 'Quest B',
+      });
     });
-  });
 
   // Cập nhật loaderData = Quest B
   loaderData = [
@@ -123,7 +132,7 @@ describe('Kiểm tra màn hình Quest List Page', () => {
 });
 
 
-   it('4. Reload: Reset filter, search về default sau khi click Cancel', async () => {
+  it('4. Reload: Reset filter, search về default sau khi click Cancel', async () => {
     // Lần đầu render — có cả Quest A + Quest B
     loaderData = [
         { key: 1, id: 'CL000001', title: 'Quest A', point: 100, status: true, createdAt: '2025-10-01' },
@@ -150,6 +159,11 @@ describe('Kiểm tra màn hình Quest List Page', () => {
         { key: 1, id: 'CL000001', title: 'Quest A', point: 100, status: true, createdAt: '2025-10-01' },
     ];
     fireEvent.click(searchButton);
+    expect(mockSetSearchParams).toHaveBeenCalledWith({
+        page: '1',
+        limit: '20',
+        keywords: 'Quest A',
+      });
     cleanup()
      renderWithRouter(<QuestListPage />);
     const table2 = await screen.findByTestId('quest-table');
@@ -165,8 +179,12 @@ describe('Kiểm tra màn hình Quest List Page', () => {
     ];
 
     fireEvent.click(cancelButton);
+
+    
     cleanup()
-     renderWithRouter(<QuestListPage />);
+
+    renderWithRouter(<QuestListPage />);
+      // expect(mockSetSearchParams).toHaveBeenCalledWith({});
     // 🧩 Kiểm tra searchInput reset và dữ liệu hiển thị lại đầy đủ
     const searchInput2 = await screen.findByTestId('search-input');
     expect(searchInput2).toHaveValue('');
@@ -184,7 +202,15 @@ describe('Kiểm tra màn hình Quest List Page', () => {
     fireEvent.click(addButton);
 
     // 👉 Kiểm tra có điều hướng đúng /add không
-    expect(mockNavigate).toHaveBeenCalledWith('/add');
+    expect(mockNavigate).toHaveBeenCalledWith(
+      '/quest/create',
+      {
+        state: {
+          pageName: '/quest',
+          mode: 'create',
+        },
+      }
+    );
   });
 
    it('6. Search theo status inactive: chỉ hiển thị các dòng status inactive', async () => {
@@ -210,6 +236,11 @@ describe('Kiểm tra màn hình Quest List Page', () => {
   // 🔹 Cleanup và render lại component với loaderData mới
   cleanup();
   renderWithRouter(<QuestListPage />);
+    expect(mockSetSearchParams).toHaveBeenCalledWith({
+    page: '1',
+    limit: '20',
+    status: false,
+  });
   const table2 = await screen.findByTestId('quest-table');
   const utils2 = within(table2);
 

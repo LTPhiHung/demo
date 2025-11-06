@@ -1,23 +1,10 @@
-export interface QuestRequest {
-  id: number;
-  code: string;
-  title: string;
-  email: string;
-  fullName: string;
-  point: number;
-  status: number; 
-  challengeType: number; 
-  submittedDate: string;
-}
-
-
 export interface Evidence {
   fileName: string;
   fileUrl: string;
   mimeType: string;
 }
 
-export interface RequestDetail {
+export interface QuestRequest {
   id: number;
   code: string;
   challengeCode: string;

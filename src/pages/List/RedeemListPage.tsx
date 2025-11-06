@@ -6,7 +6,7 @@ import SearchTable from '../../components/SearchTable';
 import { useState } from 'react';
 import type { InputType, PaginationInput, SearchInput } from '../../interfaces/searchInput';
 import _ from 'lodash';
-import { useFetch } from '../../hooks/useFetchQuestRequest';
+import { usePostFetch } from '../../hooks/usePostFetch';
 import type { Redeem } from '../../interfaces/redeem';
 import TableContainer from '../../components/TableContainer';
 
@@ -26,11 +26,15 @@ const RedeemListPage = () => {
   const [searchInput, setSearchInput] = useState<SearchInput>({})
   const [inputData, setInputData] = useState<InputType>(defaultPagination)
 
-  const {data, pagination, loading} =  useFetch<Redeem, InputType>('/redeem/search', inputData);
+  const {data, pagination, loading} =  usePostFetch<Redeem, InputType>('/redeem/search', inputData);
 
   const handleSearch = () => {
     let finalInput = { ...searchInput };
 
+    if (finalInput.keywords === '') {
+      finalInput = _.omit(finalInput, 'keywords'); 
+    }
+    
     if (finalInput.status === 0) {
       finalInput = _.omit(finalInput, 'status');
     }

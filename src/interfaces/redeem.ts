@@ -2,7 +2,7 @@ export interface Redeem {
   id: number;
   redeemCode: string;
   point: number;
-  isPercentage: number; 
+  isPercentage: boolean | number; 
   percentageOff: number;
   maximumAmount: number;
   fixAmount: number | null;

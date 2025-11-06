@@ -8,7 +8,7 @@ import type { QuestRequest } from '../../interfaces/questRequest';
 import { useState } from 'react';
 import type { InputType, PaginationInput, SearchInput } from '../../interfaces/searchInput';
 import _ from 'lodash';
-import { useFetch } from '../../hooks/useFetchQuestRequest';
+import { usePostFetch } from '../../hooks/usePostFetch';
 import TableContainer from '../../components/TableContainer';
 
 const QuestReQuestListPage = () => {
@@ -25,13 +25,17 @@ const QuestReQuestListPage = () => {
   }
 
   const [searchInput, setSearchInput] = useState<SearchInput>({})
-  const [inputData, setInputData] = useState<InputType>(defaultPagination)
+  const [inputData, setInputData] = useState<InputType>({...searchInput, ...defaultPagination})
 
-  const {data, pagination, loading} =  useFetch<QuestRequest, InputType>('/point-request/search', inputData);
+  const {data, pagination, loading} =  usePostFetch<QuestRequest, InputType>('/point-request/search', inputData);
 
   const handleSearch = () => {
     let finalInput = { ...searchInput };
 
+    if (finalInput.keywords === '') {
+      finalInput = _.omit(finalInput, 'keywords'); 
+    }
+    
     if (finalInput.status === 0) {
       finalInput = _.omit(finalInput, 'status');
     }

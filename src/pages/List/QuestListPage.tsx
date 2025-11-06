@@ -36,7 +36,6 @@ const QuestListPage: React.FC = () => {
       page: '1',
       limit: '20',
     };
-    console.log(searchInput)
     if (searchInput.keywords && searchInput.keywords.trim()) params.keywords = searchInput.keywords.trim();
     if (searchInput.status !== 2) params.status = String(searchInput.status);
 
@@ -50,14 +49,18 @@ const QuestListPage: React.FC = () => {
   };
 
   const handlePagination = (page: number, pageSize: number) => {
-    const params = new URLSearchParams(location.search);
-    params.set('page', page.toString());
-    params.set('limit', pageSize.toString());
-    navigate({ pathname: '/quest', search: params.toString() });
+ // Lấy params hiện tại để giữ lại từ khóa & status
+  const params = new URLSearchParams(searchParams);
+
+  // Cập nhật page & limit
+  params.set('page', page.toString());
+  params.set('limit', pageSize.toString());
+
+  setSearchParams(params);
   }
 
   const handleViewDetail = (record: Quest) => {
-    navigate(`/quest/${record.id}`, { state: { mode: 'detail', data:  record} });
+    navigate(`/quest/${record.id}`);
   };
 
   const columns = [

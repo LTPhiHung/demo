@@ -1,55 +1,42 @@
 /** @jsxImportSource @emotion/react */
-import { PlusOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import { FormComponent } from '../../components/FormComponent';
 import type { Quest } from '../../interfaces/quest';
-import { AddButton, Header } from './DetailQuestPage.styles';
 import BackSection from '../../components/BackSection';
 import ContentContainer from '../../components/ContentContainer';
+import { Header, AddButton } from './DetailQuestPage.styles';
+import { useParams } from 'react-router-dom';
+import { useGetFetch } from '../../hooks/useGetFetch';
+import { Spin } from 'antd';
+import NotFoundPage from '../NotfoundPage';
 
 const DetailQuestPage: React.FC = () => {
   const { t } = useTranslation('quest');
+  const { id } = useParams(); 
   const [isFormComplete, setIsFormComplete] = useState(false);
-  const defaultValue: Quest = {
-    title: '',
-    point: 1,
-    accountRanks: [],
-    description: '',
-    requiredUploadEvidence: true,
-    requiredEnterLink: true,
-    allowSubmitMultiple: true,
-    expiryDate: null, // kiểu Quest nên khai báo là dayjs.Dayjs | null
-    platform: 0,
-    challengeCode: 'quest',
-    id: '',
-    status: true,
-    createdAt: '',
-    updatedAt: '',
-    createdBy: '',
-    updatedBy: ''
-  };
-  const location = useLocation();
-  const { mode, data } = location.state;
-  const questData = data ?? defaultValue;
-  return (
+  const { data, loading, error } = useGetFetch<Quest>(`/quest/${id}`);
+
+  return loading ? (
+    <Spin />
+  ) : error !== null ? (
+    <NotFoundPage/>
+  ) : (
     <ContentContainer>
       {/* Header */}
       <Header>
-        <BackSection page='quest' title={questData.challengeCode} mode={mode} />
+        <BackSection page='quest' title={data?.challengeCode || ''} mode={'detail'} />
 
         <AddButton
           type="primary"
           disabled={!isFormComplete}
         >
-          <PlusOutlined />
-          <span>{t('add')}</span>
+          <span>{t('Update')}</span>
         </AddButton>
       </Header>
 
       {/* Form */}
-      <FormComponent setIsFormComplete={setIsFormComplete} questData={questData} />
+      <FormComponent setIsFormComplete={setIsFormComplete} questData={data} />
     </ContentContainer>
   );
 };

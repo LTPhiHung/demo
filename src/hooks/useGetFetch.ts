@@ -9,7 +9,9 @@ interface UseGetDataResult<T> {
   refetch: () => Promise<void>;
 }
 
-export function useGetData<T>(url: string, deps: string[] = []): UseGetDataResult<T> {
+export function useGetFetch<T>(
+  url: string, 
+  deps: string[] = []): UseGetDataResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

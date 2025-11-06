@@ -37,7 +37,6 @@ export const questLoader = async ({ request }: { request: Request }) => {
     return { data, pagination };
   } catch (error) {
     console.error(' questLoader API failed:', error);
-
     return {
       data: [],
       pagination: {

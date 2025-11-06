@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import AddNewQuestForm from '../pages/Detail/DetailQuestPage';
+import DetailQuestPage from '../pages/Detail/DetailQuestPage';
 import userEvent from '@testing-library/user-event';
 
 const mockNavigate = vi.fn();
@@ -26,7 +26,7 @@ describe('Kiểm tra màn hình Add New Quest', () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
-        <AddNewQuestForm />
+        <DetailQuestPage />
       </MemoryRouter>
     );
   });

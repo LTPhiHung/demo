@@ -5,7 +5,7 @@ import SearchTable from '../../components/SearchTable';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import type { InputType, PaginationInput, SearchInput } from '../../interfaces/searchInput';
-import { useFetch } from '../../hooks/useFetchQuestRequest';
+import { usePostFetch } from '../../hooks/usePostFetch';
 import type { WelcomeQuest } from '../../interfaces/welcomeQuest';
 import _ from 'lodash';
 import TableContainer from '../../components/TableContainer';
@@ -27,7 +27,7 @@ const WelcomeQuestListPage = () => {
   const [searchInput, setSearchInput] = useState<SearchInput>({})
   const [inputData, setInputData] = useState<InputType>({...searchInput, ...defaultPagination})
 
-  const {data, pagination, loading} =  useFetch<WelcomeQuest, InputType>('/welcome-quest/search', inputData);
+  const {data, pagination, loading} =  usePostFetch<WelcomeQuest, InputType>('/welcome-quest/search', inputData);
 
   const handleSearch = () => {
     let finalInput = { ...searchInput }; 

@@ -4,16 +4,16 @@ import _ from 'lodash';
 import axiosInstance from '../api/axiosInstance';
 import type { Paging } from '../interfaces/paging';
 
-export interface UseFetchQuestResult<T> {
+export interface UsePostDataResult<T> {
   loading: boolean;
   data: T[];
   pagination: Paging;
 }
 
-export const useFetch = <T, InputType>(
+export const usePostFetch = <T, InputType>(
   url: string,
   input: InputType
-): UseFetchQuestResult<T> => {
+): UsePostDataResult<T> => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T[]>([]);
   const [pagination, setPagination] = useState<Paging>({
@@ -23,7 +23,6 @@ export const useFetch = <T, InputType>(
     totalPage: 0,
   });
 
-  console.log(url, input)
   const fetchData = async () => {
     try {
       setLoading(true);

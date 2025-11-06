@@ -1,31 +1,22 @@
-import { Checkbox, DatePicker, Form, Input, Select, Switch } from 'antd';
-import dayjs from 'dayjs';
+import { Form, Input, Select, Switch } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Quest } from '../interfaces/quest';
+import type { WelcomeQuest } from '../interfaces/welcomeQuest';
 
 const { TextArea } = Input;
 
 interface Props {
-  questData: Quest | null;
+  questData: WelcomeQuest | null;
   setIsFormComplete: (value: boolean) => void;
 }
 
-const accountRanksOptions = [
-  { label: 'accountRank.sliver', value: 1 },
-  { label: 'accountRank.gold', value: 2 },
-  { label: 'accountRank.diamond', value: 3 },
-];
-
-export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete }) => {
+export const WelcomeQuestFormComponent: React.FC<Props> = ({ questData, setIsFormComplete }) => {
   const [form] = Form.useForm();
   const { t } = useTranslation('quest');
   const [formData, setFormData] = useState(questData);
   useEffect(() => {
     const checkComplete =
       formData?.title?.trim() !== '' &&
-      formData?.point && formData?.point > 0 &&
-      (formData?.accountRanks?.length ?? 0) > 0 &&
       formData?.description?.trim() !== '' &&
       formData?.expiryDate !== null &&
         (formData?.requiredUploadEvidence === true || formData?.requiredEnterLink === true);;
@@ -44,16 +35,6 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
           setFormData((prev) => ({ ...prev, ...allValues }));
         }}
       >
-        {/* Active */}
-        <Form.Item
-          label={t('status.active') + ' :'}
-          name="status"
-          valuePropName="checked"
-          wrapperCol={{ flex: 1 }}
-        >
-          <Switch />
-        </Form.Item>
-
         {/* Title */}
         <Form.Item
           label={t('title.label') + ' :'}
@@ -64,18 +45,13 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
           <Input placeholder={t('title.placeholder')} maxLength={200} />
         </Form.Item>
 
-        {/* Expiry Date */}
          <Form.Item
-          label={t('expiryDate.label') + ' :'}
-          name="expiryDate"
+          label={t('status.active') + ' :'}
+          name="status"
+          valuePropName="checked"
           wrapperCol={{ flex: 1 }}
         >
-          <DatePicker
-            style={{ width: '100%' }}
-            placeholder={t('expiryDate.description')}
-            disabledDate={(current) => current && current < dayjs().startOf('day')}
-            allowClear
-          />
+          <Switch />
         </Form.Item>
 
         {/* Platform */}
@@ -94,49 +70,6 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
             <Select.Option value={6}>Twitter</Select.Option>
             <Select.Option value={7}>Discord</Select.Option>
           </Select>
-        </Form.Item>
-
-          {/* Expiry Date */}
-       <Form.Item
-          label={t('expiryDate.label') + ' :'}
-          name="expiryDate"
-          wrapperCol={{ flex: 1 }}
-        >
-          <DatePicker
-            style={{ width: '100%' }}
-            placeholder={t('expiryDate.description')}
-            disabledDate={(current) => current && current < dayjs().startOf('day')}
-            allowClear
-          />
-        </Form.Item>
-
-        {/* Point */}
-        <Form.Item
-          label={t('point.label') + ' :'}
-          name="point"
-          rules={[
-            { required: true, message: t('point.message1') },
-            {
-              type: 'number',
-              min: 1,
-              max: 100000,
-              transform: (value) => (value !== '' ? Number(value) : value),
-              message: t('point.message2'),
-            },
-          ]}
-          wrapperCol={{ flex: 1 }}
-        >
-          <Input type="number" placeholder="Enter points" />
-        </Form.Item>
-
-        {/* Account Ranks */}
-        <Form.Item
-          label={t('accountRanks.label') + ' :'}
-          name="accountRank"
-          rules={[{ required: true, message: t('accountRanks.message'), type: 'array' }]}
-          wrapperCol={{ flex: 1 }}
-        >
-          <Checkbox.Group options={accountRanksOptions} />
         </Form.Item>
 
         {/* Required Upload Image */}
@@ -163,7 +96,7 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
 
         {/* Required Enter Link */}
         <Form.Item
-          label={t('requiredSwitch.enterLink')}
+          label={t('requiredSwitch.enterLink') + ' :'}
           name="requiredEnterLink"
           valuePropName="checked"
           wrapperCol={{ flex: 1 }}
@@ -179,16 +112,6 @@ export const FormComponent: React.FC<Props> = ({ questData, setIsFormComplete })
               },
             }),
           ]}
-        >
-          <Switch />
-        </Form.Item>
-
-        {/* Allow Multiple Submission */}
-        <Form.Item
-          label={t('allowMultipleSubmission') + ' :'}
-          name="allowSubmitMultiple"
-          valuePropName="checked"
-          wrapperCol={{ flex: 1 }}
         >
           <Switch />
         </Form.Item>

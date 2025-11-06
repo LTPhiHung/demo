@@ -10,6 +10,9 @@ import DetailWelcomeQuestPage from './pages/Detail/DetailWelcomeQuestPage';
 import NotFoundPage from './pages/NotfoundPage';
 import RedeemListPage from './pages/List/RedeemListPage';
 import ReemDetailPage from './pages/Detail/ReemDetailPage';
+import CreateQuestPage from './pages/Create/CreateQuestPage';
+import CreateWelcomeQuestPage from './pages/Create/CreateWelcomeQuestPage';
+import CreateRedeemPage from './pages/Create/CreateRedeemPage';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'quest/create',
-        element: <DetailQuestPage />,
+        element: <CreateQuestPage />,
       },
       {
         path: 'quest/:id',
@@ -43,7 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'welcome-quest/create',
-        element: <DetailWelcomeQuestPage />,
+        element: <CreateWelcomeQuestPage />,
       },
       {
         path: 'welcome-quest/:id',
@@ -52,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: 'redeem',
         element: <RedeemListPage />,
+      },
+      {
+        path: 'redeem/create',
+        element: <CreateRedeemPage />,
       },
       {
         path: 'redeem/:id',

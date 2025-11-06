@@ -65,6 +65,9 @@ const SearchTable: React.FC<PageProps> = ({
     } });
   };
 
+  const statusValue = searchInput?.status ?? (!isMultipleStatus ? defaultStatusOptions[0].value : undefined);
+
+
   return (
     <ContentContainer style={{ marginBottom: 24 }}>
       <StyledSpace>
@@ -79,7 +82,7 @@ const SearchTable: React.FC<PageProps> = ({
         <Select
           allowClear
           {...(isMultipleStatus ? { mode: 'multiple', maxTagCount: 'responsive' } : {})}
-          value={searchInput?.status}
+          value={statusValue}
           placeholder={t('status.description')}
           style={{ width: 180 }}
           onChange={handleChangeStatus}

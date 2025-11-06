@@ -16,7 +16,6 @@ const BackSection = (props: Props) => {
     const { title, page, mode='detail' } = props;
     const { t } = useTranslation(['quest', 'welcome-quest', 'redeem']);
     const navigate = useNavigate()
-    console.log(page,title)
     return (
         <Section>
             <BackButton

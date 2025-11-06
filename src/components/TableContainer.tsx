@@ -18,7 +18,6 @@ const TableContainer: React.FC<CardSectionProps> = ({
     const navigate = useNavigate();
     const location = useLocation();
     const { t } = useTranslation();
-    console.log(location.pathname)
   return (
     <ContentContainer>
         {isAdd && 
