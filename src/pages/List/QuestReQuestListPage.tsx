@@ -11,7 +11,7 @@ import _ from 'lodash';
 import { usePostFetch } from '../../hooks/usePostFetch';
 import TableContainer from '../../components/TableContainer';
 
-const QuestReQuestListPage = () => {
+const QuestReQuestListPage: React.FC = () => {
   const { t } = useTranslation('request');
   const navigate = useNavigate();
 

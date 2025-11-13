@@ -11,7 +11,8 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWludWF0Ym9AeW9wbWFpbC5jb20iLCJpYXQiOjE3NjIzOTUxMjYsIm5iZiI6MTc2MjM5NTEyNiwiZXhwIjoxNzYyNDIzOTI2LCJhdWQiOiJ3ZW1hc3RlcnRyYWRlIiwic3ViIjoiNDNhM2RiMDQtNGY4YS00NGNkLWEyZjYtOTg5YjljMjZkNWU4IiwianRpIjoiY3J4b2NqS1NpWmg1MjVlVy1Ddno3In0.T8VbWEsbJ5CgJzJWyt_yX1T-YKZpk1kOFYrcd9nqChc';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWludWF0Ym9AeW9wbWFpbC5jb20iLCJpYXQiOjE3NjI5NDQ5MDksIm5iZiI6MTc2Mjk0NDkwOSwiZXhwIjoxNzYyOTczNzA5LCJhdWQiOiJ3ZW1hc3RlcnRyYWRlIiwic3ViIjoiNDNhM2RiMDQtNGY4YS00NGNkLWEyZjYtOTg5YjljMjZkNWU4IiwianRpIjoiWU93b2tpcEptbWFneXQ1VENCb0VOIn0.UWBHwGgqo7ZZ_7mk-EZUEcHqXayPbp0M1oJXAPN-3KA';
+      
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

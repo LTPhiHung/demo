@@ -9,7 +9,7 @@ import WelcomeQuestListPage from './pages/List/WelcomeQuestListPage';
 import DetailWelcomeQuestPage from './pages/Detail/DetailWelcomeQuestPage';
 import NotFoundPage from './pages/NotfoundPage';
 import RedeemListPage from './pages/List/RedeemListPage';
-import ReemDetailPage from './pages/Detail/ReemDetailPage';
+import RedeemDetailPage from './pages/Detail/RedeemDetailPage';
 import CreateQuestPage from './pages/Create/CreateQuestPage';
 import CreateWelcomeQuestPage from './pages/Create/CreateWelcomeQuestPage';
 import CreateRedeemPage from './pages/Create/CreateRedeemPage';
@@ -23,6 +23,7 @@ const router = createBrowserRouter([
         path: 'quest',
         element: <QuestListPage />,
         loader: questLoader, // gắn loader vào route
+        errorElement: <NotFoundPage />
       },
       {
         path: 'point-request',
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'redeem/:id',
-        element: <ReemDetailPage />,
+        element: <RedeemDetailPage />,
       },
       {
         path: '*',

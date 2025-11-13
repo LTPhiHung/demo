@@ -11,7 +11,7 @@ import { useGetFetch } from '../../hooks/useGetFetch';
 import { Spin } from 'antd';
 import NotFoundPage from '../NotfoundPage';
 
-const ReemDetailPage: React.FC = () => {
+const RedeemDetailPage: React.FC = () => {
   const { t } = useTranslation('quest');
   const { id } = useParams(); 
   const [isFormComplete, setIsFormComplete] = useState(false);
@@ -41,4 +41,4 @@ const ReemDetailPage: React.FC = () => {
   );
 };
 
-export default ReemDetailPage;
+export default RedeemDetailPage;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { message } from 'antd';
 import _ from 'lodash';
 import axiosInstance from '../api/axiosInstance';
@@ -16,6 +16,7 @@ export const usePostFetch = <T, InputType>(
 ): UsePostDataResult<T> => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T[]>([]);
+  const isFirstRender = useRef(true);
   const [pagination, setPagination] = useState<Paging>({
     maxPerPage: 20,
     pageNumber: 1,
@@ -45,6 +46,10 @@ export const usePostFetch = <T, InputType>(
   };
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     fetchData();
   }, [url, JSON.stringify(input)]);
 

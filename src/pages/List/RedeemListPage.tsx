@@ -10,7 +10,7 @@ import { usePostFetch } from '../../hooks/usePostFetch';
 import type { Redeem } from '../../interfaces/redeem';
 import TableContainer from '../../components/TableContainer';
 
-const RedeemListPage = () => {
+const RedeemListPage:React.FC = () => {
   const { t } = useTranslation('redeem');
   const navigate = useNavigate();
 

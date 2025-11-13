@@ -1,5 +1,5 @@
 // src/hooks/useGetData.ts
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axiosInstance from '../api/axiosInstance';
 
 interface UseGetDataResult<T> {
@@ -15,7 +15,7 @@ export function useGetFetch<T>(
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const isFirstRender = useRef(true);
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -31,6 +31,10 @@ export function useGetFetch<T>(
   };
 
   useEffect(() => {
+     if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);

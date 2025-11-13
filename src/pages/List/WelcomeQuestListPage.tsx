@@ -11,7 +11,7 @@ import _ from 'lodash';
 import TableContainer from '../../components/TableContainer';
 import TableComponent from '../../components/TableComponent';
 
-const WelcomeQuestListPage = () => {
+const WelcomeQuestListPage: React.FC = () => {
   const { t } = useTranslation('welcome-quest');
   const navigate = useNavigate();
 

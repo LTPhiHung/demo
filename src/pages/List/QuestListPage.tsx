@@ -19,7 +19,7 @@ const QuestListPage: React.FC = () => {
   const navigate = useNavigate();
   const navigation = useNavigation();
 
-  const { data, pagination } = useLoaderData() as LoaderData;
+  const { data, pagination } = useLoaderData<LoaderData>();
   const loading = navigation.state === 'loading';
 
   const [searchParams, setSearchParams] = useSearchParams();
